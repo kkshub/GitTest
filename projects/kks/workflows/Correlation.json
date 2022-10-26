@@ -179,8 +179,8 @@
       "description": "calculates the correlation between two series of data.",
       "type": "transform",
       "nodeClass": "fire.nodes.ml.NodeCorrelation",
-      "x": "510px",
-      "y": "282px",
+      "x": "429px",
+      "y": "290px",
       "fields": [
         {
           "name": "storageLevel",
@@ -244,8 +244,8 @@
       "description": "Prints the specified number of records in the DataFrame. It is useful for seeing intermediate output",
       "type": "transform",
       "nodeClass": "fire.nodes.util.NodePrintFirstNRows",
-      "x": "451px",
-      "y": "132px",
+      "x": "439px",
+      "y": "172px",
       "fields": [
         {
           "name": "storageLevel",

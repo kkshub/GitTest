@@ -9,8 +9,8 @@
       "description": "It reads in CSV files and creates a DataFrame from it",
       "type": "dataset",
       "nodeClass": "fire.nodes.dataset.NodeDatasetCSV",
-      "x": "383px",
-      "y": "241px",
+      "x": "712px",
+      "y": "164px",
       "hint": "Whenever the file is changed, Refresh the Schema",
       "fields": [
         {

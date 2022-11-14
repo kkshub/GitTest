@@ -571,7 +571,7 @@
         },
         {
           "name": "comment",
-          "value": "",
+          "value": "\u003cp\u003evizualization file\u003c/p\u003e",
           "widget": "textarea_rich",
           "title": "Comment",
           "description": "Comments for the Workflow",

@@ -1,0 +1,505 @@
+{
+  "name": "Monthly Passengers distribution",
+  "uuid": "43ec5799-5232-4697-acb7-b6be0266700e",
+  "category": "TS",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "ReadCSV",
+      "description": "It reads in CSV files and creates a DataFrame from it",
+      "details": "\u003ch2\u003eRead CSV Details\u003c/h2\u003e\n\u003cbr\u003e\nThis node reads CSV files and creates a DataFrame from it. It can read either from a single file, or a directory containing multiple files. The user can configure the below fields to parse the file.\u003cbr\u003e\n\u003cbr\u003e\nThe user can choose the \u003cb\u003eOutput storage level\u003c/b\u003e from the drop down. The options in the dropdown can be one of the following:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY\u003c/b\u003e          Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, some partitions will not be cached and will be recomputed on the fly each time they qre needed. This is the default level.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_AND_DISK\u003c/b\u003e       Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, store the partitions that do nott fit on disk, and read them from there when they are needed.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY_SER\u003c/b\u003e        Store RDD as serialized Java objects (one byte array per partition). This is generally more space-efficient than deserialized objects, especially when using a fast serializer, but more CPU-intensive to read.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_AND_DISK_SER\u003c/b\u003e    Similar to MEMORY_ONLY_SER, but spill partitions that do not fit in memory to disk instead of recomputing them on the fly each time they\u0027re needed.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eDISK_ONLY\u003c/b\u003e              Store the RDD partitions only on disk.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY_2, MEMORY_AND_DISK_2 others \u003c/b\u003e . Same as the levels above, but replicate each partition on two cluster nodes.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eOFF_HEAP\u003c/b\u003e               Similar to MEMORY_ONLY_SER, but store the data in off-heap memory. This requires off-heap memory to be enabled.\u003c/li\u003e\n\u003c/ul\u003e\nThe user need to provide a data file \u003cb\u003ePath\u003c/b\u003e to read the data from. This is a required field.\u003cbr\u003e\n\u003cbr\u003e\nThe user can choose the \u003cb\u003eSeperator\u003c/b\u003e used in the data file to parse it. The default seperator is \u003cb\u003e( , )\u003c/b\u003e comma.\u003cbr\u003e\n\u003cbr\u003e\nIn the \u003cb\u003eHeader\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e if the data file has header.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e Otherwise.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eDrop special character in column name\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e If you want to remove the special characters from column names.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e Otherwise.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eMode\u003c/b\u003e field, one can choose from the below options in the dropdown:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003ePERMISSIVE\u003c/b\u003e When the parser meets a corrupt field in a records, it sets the value of the field to NULL and continues to the next record.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eDROPMALFORMED\u003c/b\u003e ignores the whole corrupted records.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eFAILFAST\u003c/b\u003e throws and exception when it meets corrupted records.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eEnforce Schema\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e The specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e The schema will be validated against all headers in CSV files in the case when the header option is set to \u003cb\u003etrue\u003c/b\u003e.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eWhether to add input file as a column in dataframe\u003c/b\u003e field, once can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e There will be a new column will be added in the dataframe at the end which can be seen in the schema columns. One can enter the name of this column.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e This functionality is disabled and the dataframe consists of only the columns read from the data file.\u003c/li\u003e\n\u003c/ul\u003e\nAfter the above options are chosen, one can click on \u003cb\u003eRefresh Schema\u003c/b\u003e to see th final columns.\u003cbr\u003e\nEven now, users can add/delete columns using \u003cb\u003e+\u003c/b\u003e button next to Refresh schema and \u003cb\u003e-\u003c/b\u003e button next to column names.\u003cbr\u003e",
+      "examples": "",
+      "type": "dataset",
+      "nodeClass": "fire.nodes.dataset.NodeDatasetCSV",
+      "x": "84.2995px",
+      "y": "303.299px",
+      "hint": "Whenever the file is changed, Refresh the Schema",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "path",
+          "value": "data/AirPassengers.csv",
+          "widget": "textfield",
+          "title": "Path",
+          "description": "Path of the Text file/directory",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "separator",
+          "value": ",",
+          "widget": "textfield",
+          "title": "Separator",
+          "description": "CSV Separator",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "header",
+          "value": "true",
+          "widget": "array",
+          "title": "Header",
+          "description": "Whether the file has a header row",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "dropSpecialCharacterInColumnName",
+          "value": "true",
+          "widget": "array",
+          "title": "Drop Special Character In ColumnName",
+          "description": "Whether to drop the Special Characters and Spaces in Column Name.",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "mode",
+          "value": "PERMISSIVE",
+          "widget": "array",
+          "title": "Mode",
+          "description": "Mode for dealing with corrupt records during parsing.",
+          "optionsArray": [
+            "PERMISSIVE",
+            "DROPMALFORMED",
+            "FAILFAST"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "enforceSchema",
+          "value": "true",
+          "widget": "array",
+          "title": "Enforce Schema",
+          "description": "If it is set to true, the specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored. If the option is set to false, the schema will be validated against all headers in CSV files in the case when the header option is set to true.",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "addInputFileName",
+          "value": "false",
+          "widget": "array",
+          "title": "Whether to add Input File Name as a column in the Dataframe",
+          "description": "Add the new field:input_file_name",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"Month\",\"#Passengers\"]",
+          "widget": "schema_col_names",
+          "title": "Column Names for the CSV",
+          "description": "New Output Columns of the SQL",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"STRING\",\"INTEGER\"]",
+          "widget": "schema_col_types",
+          "title": "Column Types for the CSV",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Column Formats for the CSV",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "2",
+      "name": "SortBy - Month",
+      "description": "It sorts the incoming DataFrame on the fields specified.",
+      "details": "This node sorts the incoming DataFrame based on the values present in columns specified.\u003cbr\u003e\n\u003cbr\u003e\nMultiple columns can be selected for sorting data. Data can be sorted in Ascending or Descending order.\u003cbr\u003e",
+      "examples": "Incoming Dataframe has following rows:\u003cbr\u003e\n\u003cbr\u003e\nCUST_CD    |    CUST_NAME    |    AGE    |    DATE_OF_JOINING    |    SALARY\u003cbr\u003e\n-------------------------------------------------------------------------------------\u003cbr\u003e\nC01        |    MATT         |    50     |    12-02-2002         |    USD 200000.00\u003cbr\u003e\nC02        |    LISA         |    45     |    15-11-2020         |    GBP 100000.00\u003cbr\u003e\nC03        |    ROBIN        |    30     |    10-10-2015         |    EUR 15000.00\u003cbr\u003e\nC04        |    MARCUS       |    35     |    01-01-2021         |    AUD 350000.00\u003cbr\u003e\n\u003cbr\u003e\nIf SortBy node is configured to sort data in descending order of values present in [CUST_NAME] column then outgoing Dataframe would be created as below:\u003cbr\u003e\n\u003cbr\u003e\nCUST_CD    |    CUST_NAME    |    AGE    |    DATE_OF_JOINING    |    SALARY\u003cbr\u003e\n-------------------------------------------------------------------------------------\u003cbr\u003e\nC03        |    ROBIN        |    30     |    10-10-2015         |    EUR 15000.00\u003cbr\u003e\nC01        |    MATT         |    50     |    12-02-2002         |    USD 200000.00\u003cbr\u003e\nC04        |    MARCUS       |    35     |    01-01-2021         |    AUD 350000.00\u003cbr\u003e\nC02        |    LISA         |    45     |    15-11-2020         |    GBP 100000.00\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeSortBy",
+      "x": "302.427px",
+      "y": "305.427px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "description",
+          "value": "",
+          "widget": "textfield",
+          "title": "Description",
+          "description": "Description",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "sortByColNames",
+          "value": "[\"Month\"]",
+          "widget": "variables_list_select",
+          "title": "Columns",
+          "description": "Columns on which to Sort By",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "ascDesc",
+          "value": "[\"ASC\"]",
+          "widget": "variables_list_array",
+          "title": "Sorting Order",
+          "description": "Whether to sort in ascending or descending order",
+          "optionsArray": [
+            "DESC",
+            "ASC"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "3",
+      "name": "Monthly Trend",
+      "details": "\u003ch2\u003eGraph Values Details\u003c/h2\u003e\n\u003cbr\u003e\nThis node represents variation between data of various data series in Graphical format.\u003cbr\u003e\n\u003cbr\u003e\nMultiple numeric columns can be plotted along Y-Coordinate. Only one can be selected along X-Coordinate.\u003cbr\u003e\n\u003cbr\u003e\nVariation between dataseries is plotted as graph of the selected type such as Line-Chart, Bar-Chart or so on.\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003eInput\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   TITLE :- The title of a graph can be set here.\u003c/li\u003e\n\u003cli\u003e   X LABEL :- X-axis label can be set here.\u003c/li\u003e\n\u003cli\u003e   Y LABEL :- Y-axis label can be set here.\u003c/li\u003e\n\u003cli\u003e   MAX VALUES TO DISPLAY :- The total number of the data points can be selected here.\u003c/li\u003e\n\u003cli\u003e   CHART TYPE :- The desired chart can be selected from the drop-down list(Line Chart,Side By Side Bar Chart,Pie Chart,Scatter Chart)                                                 \u003c/li\u003e\n\u003cli\u003e   CHART COLORS :- The different types of color can be selected for better visualization.\u003c/li\u003e\n\u003cli\u003e   IS STREAMING? :- If the graph is stream graph set the option as true else false(by default it is false). \u003c/li\u003e\n\u003cli\u003e   X COLUMN :- Select the column for X-axis.\u003c/li\u003e\n\u003cli\u003e   Y COLUMNS :- Select the colum for Y-axis.\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4\u003eOutput\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   It will plot a graph and will represent the trends between mentioned columns.\u003c/li\u003e\n\u003cli\u003e   The different types of a graph can be plotted between specified columns to check the trends.\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4\u003eTypes Of Chart\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   Line Chart\u003c/li\u003e\n\u003cli\u003e   Side By Side Bar Chart\u003c/li\u003e\n\u003cli\u003e   Stack Bar Chart\u003c/li\u003e\n\u003cli\u003e   Pie Chart\u003c/li\u003e\n\u003cli\u003e   Scatter Chart\u003c/li\u003e\n\u003cli\u003e   Dual Line Chart\u003c/li\u003e\n\u003cli\u003e   Area Chart\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4\u003eExample\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   A line chart allows us to track the development of several variables at the same time.\u003c/li\u003e\n\u003cli\u003e   Scatter plots are used to determine whether or not two variables have a relationship or correlation.\u003c/li\u003e\n\u003cli\u003e   The main motive of a stacked bar chart is to compare numeric values between levels of a categorical variable.\u003c/li\u003e\n\u003c/ul\u003e",
+      "examples": "",
+      "type": "transform",
+      "nodeClass": "fire.nodes.graph.NodeGraphValues",
+      "x": "537px",
+      "y": "300px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "title",
+          "value": "Trend",
+          "widget": "textfield",
+          "title": "Title",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "xlabel",
+          "value": "Month",
+          "widget": "textfield",
+          "title": "X Label",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "ylabel",
+          "value": "Number oF Monthly Passengers",
+          "widget": "textfield",
+          "title": "Y Label",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "maxValuesToDisplay",
+          "value": "100000",
+          "widget": "textfield",
+          "title": "Max Values To Display",
+          "description": "Maximum number of values to display in result.",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "graphType",
+          "value": "LINECHART",
+          "widget": "enum",
+          "title": "Chart Type",
+          "optionsMap": {
+            "LINECHART": "Line Chart",
+            "COLUMNCHART": "Side by Side Bar Chart",
+            "BARCHART": "Stacked Bar Chart",
+            "PIE": "Pie Chart",
+            "SCATTERCHART": "Scatter Chart"
+          },
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "chartColors",
+          "value": "#F2A993,#76D0D7,#B9ABE5,#EEC896,#DE95B0,#009cef,#86ABA1,#00AF91,#C2B8A3,#BFA2DB",
+          "widget": "colors",
+          "title": "Chart Colors",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "isStreaming",
+          "value": "false",
+          "widget": "array",
+          "title": "Is Streaming?",
+          "description": "Whether the Graph is a Streaming Graph or not",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "xCol",
+          "value": "Month",
+          "widget": "variable",
+          "title": "X Column",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "yCols",
+          "value": "[\"#Passengers\"]",
+          "widget": "variables",
+          "title": "Y Columns",
+          "datatypes": [
+            "integer",
+            "long",
+            "double",
+            "float"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "4",
+      "name": "StickyNote",
+      "description": "Allows capturing Notes on the Workflow",
+      "details": "",
+      "examples": "",
+      "type": "sticky",
+      "nodeClass": "fire.nodes.doc.NodeStickyNote",
+      "x": "143.974px",
+      "y": "101.964px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "bgColor",
+          "value": "blue",
+          "widget": "textfield",
+          "title": "Bg Color",
+          "description": "Background of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "width",
+          "value": "396.77778px",
+          "widget": "textfield",
+          "title": "Width",
+          "description": "Width of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "height",
+          "value": "105.77778px",
+          "widget": "textfield",
+          "title": "Height",
+          "description": "Height of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "comment",
+          "value": "\u003cp\u003eChecking the Trend in the data with chart.\u003c/p\u003e",
+          "widget": "textarea_rich",
+          "title": "Comment",
+          "description": "Comments for the Workflow",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "target": "2",
+      "id": 1
+    },
+    {
+      "source": "2",
+      "target": "3",
+      "id": 2
+    }
+  ],
+  "dataSetDetails": [],
+  "engine": "scala"
+}

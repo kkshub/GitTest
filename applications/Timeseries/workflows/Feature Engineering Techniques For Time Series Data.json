@@ -1,0 +1,1449 @@
+{
+  "name": "Feature Engineering Techniques For Time Series Data",
+  "uuid": "1bb6a48f-d265-489d-aac9-40345f60e5b8",
+  "category": "Time Series",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "ReadCSV",
+      "description": "It reads in CSV files and creates a DataFrame from it",
+      "details": "This node reads CSV files and creates a DataFrame from it.\u003cbr\u003e",
+      "examples": "",
+      "type": "dataset",
+      "nodeClass": "fire.nodes.dataset.NodeDatasetCSV",
+      "x": "92.8906px",
+      "y": "449.904px",
+      "hint": "Whenever the file is changed, Refresh the Schema",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "path",
+          "value": "data/store_item_stock_train.csv",
+          "widget": "textfield",
+          "title": "Path",
+          "description": "Path of the Text file/directory",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "separator",
+          "value": ",",
+          "widget": "textfield",
+          "title": "Separator",
+          "description": "CSV Separator",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "header",
+          "value": "true",
+          "widget": "array",
+          "title": "Header",
+          "description": "Does the file have a header row",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "dropSpecialCharacterInColumnName",
+          "value": "true",
+          "widget": "array",
+          "title": "Drop Special Character In ColumnName",
+          "description": "Drop the SpecialCharacter and Space in Column Name.",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "dropMalformed",
+          "value": "false",
+          "widget": "array",
+          "title": "Drop Malformed",
+          "description": "Whether to drop Malformed records or error",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"date\",\"store\",\"item\",\"sales\"]",
+          "widget": "schema_col_names",
+          "title": "Column Names for the CSV",
+          "description": "New Output Columns of the SQL",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"DATE\",\"INTEGER\",\"INTEGER\",\"INTEGER\"]",
+          "widget": "schema_col_types",
+          "title": "Column Types for the CSV",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\",\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Column Formats for the CSV",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "16",
+      "name": "StickyNote",
+      "description": "Allows capturing Notes on the Workflow",
+      "details": "",
+      "examples": "",
+      "type": "sticky",
+      "nodeClass": "fire.nodes.doc.NodeStickyNote",
+      "x": "20.9792px",
+      "y": "13.9844px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "bgColor",
+          "value": "blue",
+          "widget": "textfield",
+          "title": "Bg Color",
+          "description": "Background of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "width",
+          "value": "860px",
+          "widget": "textfield",
+          "title": "Width",
+          "description": "Width of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "height",
+          "value": "193px",
+          "widget": "textfield",
+          "title": "Height",
+          "description": "Height of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "comment",
+          "value": "\u003ch1\u003e\u003cstrong\u003eTime Series Feature Engineering \u003c/strong\u003e\u003c/h1\u003e\u003cp\u003eFeature engineering is the process of transforming raw data into features that better represent the underlying problem to the predictive models, resulting in improved model accuracy on unseen data. Feature engineering tries to come up with the right set of predictors for a model. We can do some feature engineering for time series data as:\u003c/p\u003e\u003cul\u003e\u003cli\u003eRolling mean, min, max, etc. statistics\u003c/li\u003e\u003cli\u003eBollinger bands and statistics\u003c/li\u003e\u003cli\u003eRolling entropy, or rolling majority, for categorical features\u0026nbsp;\u003c/li\u003e\u003c/ul\u003e",
+          "widget": "textarea_rich",
+          "title": "Comment",
+          "description": "Comments for the Workflow",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "17",
+      "name": "StickyNote",
+      "description": "Allows capturing Notes on the Workflow",
+      "details": "",
+      "examples": "",
+      "type": "sticky",
+      "nodeClass": "fire.nodes.doc.NodeStickyNote",
+      "x": "492.943px",
+      "y": "560.938px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "bgColor",
+          "value": "gray",
+          "widget": "textfield",
+          "title": "Bg Color",
+          "description": "Background of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "width",
+          "value": "265px",
+          "widget": "textfield",
+          "title": "Width",
+          "description": "Width of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "height",
+          "value": "142px",
+          "widget": "textfield",
+          "title": "Height",
+          "description": "Height of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "comment",
+          "value": "\u003cp\u003eLag is essentially delay. Just as correlation shows how much two timeseries are similar, autocorrelation describes how similar the time series is with itself or with other lags\u0026nbsp;\u003c/p\u003e",
+          "widget": "textarea_rich",
+          "title": "Comment",
+          "description": "Comments for the Workflow",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "18",
+      "name": "StickyNote",
+      "description": "Allows capturing Notes on the Workflow",
+      "details": "",
+      "examples": "",
+      "type": "sticky",
+      "nodeClass": "fire.nodes.doc.NodeStickyNote",
+      "x": "248px",
+      "y": "233px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "bgColor",
+          "value": "gray",
+          "widget": "textfield",
+          "title": "Bg Color",
+          "description": "Background of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "width",
+          "value": "593px",
+          "widget": "textfield",
+          "title": "Width",
+          "description": "Width of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "height",
+          "value": "112px",
+          "widget": "textfield",
+          "title": "Height",
+          "description": "Height of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "comment",
+          "value": "\u003cp\u003eMoving average (MA) is one of the most popular technical analysis tools for checking target movements over a given period. It is utilized to determine support and resistance levels, as well as identify the trend direction. A moving average can help to smooth out target action by filtering out the \"noise\" from random short-term sales fluctuations.\u0026nbsp;\u003c/p\u003e",
+          "widget": "textarea_rich",
+          "title": "Comment",
+          "description": "Comments for the Workflow",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "19",
+      "name": "StickyNote",
+      "description": "Allows capturing Notes on the Workflow",
+      "details": "",
+      "examples": "",
+      "type": "sticky",
+      "nodeClass": "fire.nodes.doc.NodeStickyNote",
+      "x": "170.966px",
+      "y": "636.448px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "bgColor",
+          "value": "gray",
+          "widget": "textfield",
+          "title": "Bg Color",
+          "description": "Background of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "width",
+          "value": "282.020834px",
+          "widget": "textfield",
+          "title": "Width",
+          "description": "Width of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "height",
+          "value": "85.020834px",
+          "widget": "textfield",
+          "title": "Height",
+          "description": "Height of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "comment",
+          "value": "\u003cp\u003eBreak date and get the year, month, week of year, day of the month, hour, minute, second, etc.\u003c/p\u003e\u003cp\u003e\u003cbr\u003e\u003c/p\u003e",
+          "widget": "textarea_rich",
+          "title": "Comment",
+          "description": "Comments for the Workflow",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "24",
+      "name": "SQL",
+      "description": "This node runs the given SQL on the incoming DataFrame",
+      "details": "This node receives an input data frame, creates a temporary table on top of that data frame.\u003cbr\u003e\nAllows the user to write a SQL which would be executed on the temporary table.\u003cbr\u003e\nThe resulting data frame of running the SQL is passed on to the next node.\u003cbr\u003e",
+      "examples": "\u003ch2\u003eSQL Examples\u003c/h2\u003e\n\u003cbr\u003e\nBelow are some example of SQL. \u003cbr\u003e\n\u003cbr\u003e\nThey use the Temp Table Name to be : tempTable\u003cbr\u003e\n\u003cbr\u003e\nThe schem of the Input Dataframe is : id, price, lotsize, bedrooms, bathrms, stories, driveway, recroom, fullbase, gashw, airco, garagepl, prefarea\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003e avg price of house\u003c/h4\u003e\n\u003cbr\u003e\nselect avg(price) as avg_price from tempTable\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003e bedrooms with avg price greater than 10000\u003c/h4\u003e\n\u003cbr\u003e\nselect bedrooms, avg_price from\u003cbr\u003e\n(select bedrooms, avg(price) as avg_price from tempTable group by bedrooms) as temp where avg_price \u003e 10000\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003e house details with bedrooms avg price greater than 10000\u003c/h4\u003e\n\u003cbr\u003e\nselect tempTable.* , inner_table.avg_price from\u003cbr\u003e\n(select bedrooms, avg_price from\u003cbr\u003e\n(select bedrooms, avg(price) as avg_price from tempTable group by bedrooms) as temp where avg_price \u003e 10000) as inner_table\u003cbr\u003e\nJOIN tempTable ON(inner_table.bedrooms \u003d tempTable.bedrooms)\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeSQL",
+      "x": "565.938px",
+      "y": "452.938px",
+      "hint": "Whenever the table is changed, go to Schema tab and Refresh the Schema",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "tempTable",
+          "value": "fire_temp_table",
+          "widget": "textfield",
+          "title": "Temp Table",
+          "description": "Temp Table Name to be used",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "sql",
+          "value": "SELECT date, store, item, sales, mean_sales as mean_7_sales FROM fire_temp_table",
+          "widget": "textarea_large",
+          "type": "sql",
+          "title": "SQL",
+          "description": "SQL to be run",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "schema",
+          "value": "",
+          "widget": "tab",
+          "title": "Schema",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"date\",\"store\",\"item\",\"sales\",\"mean_1_sales\"]",
+          "widget": "schema_col_names",
+          "title": "Output Column Names",
+          "description": "Name of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"DATE\",\"INTEGER\",\"INTEGER\",\"INTEGER\",\"DOUBLE\"]",
+          "widget": "schema_col_types",
+          "title": "Output Column Types",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\",\"\",\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Output Column Formats",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "26",
+      "name": "7step_moving_avg",
+      "description": "This node calculates the moving values of selected functions for the field(input column).",
+      "details": "This node Generates a new Dataframe with Moving Window Function based computed Column appended to the incoming Dataframe.\u003cbr\u003e\n\u003cbr\u003e\nNew Column is populated with value based on selected Moving Window Function applied on the selected column.\u003cbr\u003e",
+      "examples": "Incoming Dataframe has following rows:\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    \u003cbr\u003e\n------------------------------------------------------------------------\u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40\u003cbr\u003e\nE02       |    LISA        |    HR      |    50000     |    35\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40\u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45\u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24\u003cbr\u003e\n\u003cbr\u003e\nIf MovingWindowFunctions node is configured as below:\u003cbr\u003e\n\u003cbr\u003e\nWINDOW START           :     -1\u003cbr\u003e\nWINDOW END             :     1\u003cbr\u003e\nPARTITION COLUMN NAME  :     DEPT\u003cbr\u003e\nORDER COLUMN NAME      :     SALARY\u003cbr\u003e\nINPUT COLUMNS          :     SALARY\u003cbr\u003e\nFUNCTIONS              :     AVG\u003cbr\u003e\n\u003cbr\u003e\nWhere window for each row is created from 1 row preceeding it upto 1 row succeeding it. \u003cbr\u003e\nThe current incoming Dataframe is partition by [DEPT] and data is sorted by [SALARY].\u003cbr\u003e\nNew column created would be populated with [AVG] of [SALARY] for rows present in a window within a partition.\u003cbr\u003e\nOutgoing Dataframe would be created as below :\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    |    mean_SALARY\u003cbr\u003e\n---------------------------------------------------------------------------------------\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25     |    35000.0\u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40     |    40000.0\u003cbr\u003e\nE02       |    LISA        |    HR      |    50000     |    35     |    53333.333\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24     |    55000.0\u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25     |    47500.0\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40     |    51666.667\u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45     |    57500.0\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeMovingWindowFunctions",
+      "x": "343.906px",
+      "y": "446.917px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "windowStart",
+          "value": "-7",
+          "widget": "textfield",
+          "title": "Window Start",
+          "description": "value to be used to calculate the window from",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "windowEnd",
+          "value": "7",
+          "widget": "textfield",
+          "title": "Window End",
+          "description": "value to be used to calculate the window to",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "partitionCol",
+          "value": "store",
+          "widget": "variable",
+          "title": "Partition Column Name",
+          "description": "partition column to split the incoming dataframe for the sliding/window operation",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "orderCol",
+          "value": "sales",
+          "widget": "variable",
+          "title": "Order Column Name",
+          "description": "the order of the selected column for the sliding/window operation",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "inputCols",
+          "value": "[\"sales\"]",
+          "widget": "variables_list_select",
+          "title": "Input Columns",
+          "description": "input column name for calc",
+          "datatypes": [
+            "integer",
+            "long",
+            "double",
+            "float"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "functions",
+          "value": "[\"avg\"]",
+          "widget": "variables_list_array",
+          "title": "Functions",
+          "description": "",
+          "optionsArray": [
+            "avg",
+            "min",
+            "max",
+            "stddev",
+            "variance",
+            "skewness",
+            "kurtosis",
+            "coefficient_of_variation",
+            "range",
+            "rms"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "27",
+      "name": "step_moving_avg",
+      "description": "This node calculates the moving values of selected functions for the field(input column).",
+      "details": "This node Generates a new Dataframe with Moving Window Function based computed Column appended to the incoming Dataframe.\u003cbr\u003e\n\u003cbr\u003e\nNew Column is populated with value based on selected Moving Window Function applied on the selected column.\u003cbr\u003e",
+      "examples": "Incoming Dataframe has following rows:\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    \u003cbr\u003e\n------------------------------------------------------------------------\u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40\u003cbr\u003e\nE02       |    LISA        |    HR      |    50000     |    35\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40\u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45\u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24\u003cbr\u003e\n\u003cbr\u003e\nIf MovingWindowFunctions node is configured as below:\u003cbr\u003e\n\u003cbr\u003e\nWINDOW START           :     -1\u003cbr\u003e\nWINDOW END             :     1\u003cbr\u003e\nPARTITION COLUMN NAME  :     DEPT\u003cbr\u003e\nORDER COLUMN NAME      :     SALARY\u003cbr\u003e\nINPUT COLUMNS          :     SALARY\u003cbr\u003e\nFUNCTIONS              :     AVG\u003cbr\u003e\n\u003cbr\u003e\nWhere window for each row is created from 1 row preceeding it upto 1 row succeeding it. \u003cbr\u003e\nThe current incoming Dataframe is partition by [DEPT] and data is sorted by [SALARY].\u003cbr\u003e\nNew column created would be populated with [AVG] of [SALARY] for rows present in a window within a partition.\u003cbr\u003e\nOutgoing Dataframe would be created as below :\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    |    mean_SALARY\u003cbr\u003e\n---------------------------------------------------------------------------------------\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25     |    35000.0\u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40     |    40000.0\u003cbr\u003e\nE02       |    LISA        |    HR      |    50000     |    35     |    53333.333\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24     |    55000.0\u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25     |    47500.0\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40     |    51666.667\u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45     |    57500.0\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeMovingWindowFunctions",
+      "x": "792.878px",
+      "y": "451.885px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "windowStart",
+          "value": "-1",
+          "widget": "textfield",
+          "title": "Window Start",
+          "description": "value to be used to calculate the window from",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "windowEnd",
+          "value": "1",
+          "widget": "textfield",
+          "title": "Window End",
+          "description": "value to be used to calculate the window to",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "partitionCol",
+          "value": "store",
+          "widget": "variable",
+          "title": "Partition Column Name",
+          "description": "partition column to split the incoming dataframe for the sliding/window operation",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "orderCol",
+          "value": "sales",
+          "widget": "variable",
+          "title": "Order Column Name",
+          "description": "the order of the selected column for the sliding/window operation",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "inputCols",
+          "value": "[\"sales\"]",
+          "widget": "variables_list_select",
+          "title": "Input Columns",
+          "description": "input column name for calc",
+          "datatypes": [
+            "integer",
+            "long",
+            "double",
+            "float"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "functions",
+          "value": "[\"avg\"]",
+          "widget": "variables_list_array",
+          "title": "Functions",
+          "description": "",
+          "optionsArray": [
+            "avg",
+            "min",
+            "max",
+            "stddev",
+            "variance",
+            "skewness",
+            "kurtosis",
+            "coefficient_of_variation",
+            "range",
+            "rms"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "28",
+      "name": "DateTimeFieldExtract",
+      "description": "It creates a new DataFrame by extracting Date and Time fields.",
+      "details": "It creates a new DataFrame by extracting Date and Time fields.\u003cbr\u003e\n\u003cbr\u003e\nThe output DataFrame has year/month/dayofmonth/hour/minute/second values extracted from the specified TimeStamp column into new columns\u003cbr\u003e",
+      "examples": "If incoming Dataframe has Date value as 2018-01-01 14:30:45 in YYYY-MM-DD HH:mm:ss format then using datetimeextract node would result in followings \u003cbr\u003e\nadded as new columns to the Dataframe:\u003cbr\u003e\n\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e YEAR : 2018 \u003c/li\u003e\n\u003cli\u003e MONTH : 01\u003c/li\u003e\n\u003cli\u003e DAY OF MONTH : 01 \u003c/li\u003e\n\u003cli\u003e HOUR : 14\u003c/li\u003e\n\u003cli\u003e MINUTE : 30\u003c/li\u003e\n\u003cli\u003e SECOND : 45\u003c/li\u003e\n\u003cli\u003e WEEKOFYEAR : 1\u003c/li\u003e\n\u003c/ul\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeDateTimeFieldExtract",
+      "x": "358.88px",
+      "y": "758.898px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "inputCol",
+          "value": "date",
+          "widget": "variable",
+          "title": "Column",
+          "description": "The input column name",
+          "datatypes": [
+            "date",
+            "timestamp"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "extractYear",
+          "value": "true",
+          "widget": "array",
+          "title": "Extract Year",
+          "description": "Extract Year",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "extractMonth",
+          "value": "true",
+          "widget": "array",
+          "title": "Extract Month",
+          "description": "Extract Month",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "extractDayOfMonth",
+          "value": "true",
+          "widget": "array",
+          "title": "Extract Day of Month",
+          "description": "Extract Day of Month",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "extractHour",
+          "value": "true",
+          "widget": "array",
+          "title": "Extract Hour",
+          "description": "Extract Hour",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "extractMinute",
+          "value": "true",
+          "widget": "array",
+          "title": "Extract Minute",
+          "description": "Extract Minute",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "extractSecond",
+          "value": "true",
+          "widget": "array",
+          "title": "Extract Second",
+          "description": "Extract Second",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "extractWeekOfYear",
+          "value": "true",
+          "widget": "array",
+          "title": "Extract WeekOfYear",
+          "description": "Extract WeekOfYear",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "31",
+      "name": "SQL",
+      "description": "This node runs the given SQL on the incoming DataFrame",
+      "details": "This node receives an input data frame, creates a temporary table on top of that data frame.\u003cbr\u003e\nAllows the user to write a SQL which would be executed on the temporary table.\u003cbr\u003e\nThe resulting data frame of running the SQL is passed on to the next node.\u003cbr\u003e",
+      "examples": "\u003ch2\u003eSQL Examples\u003c/h2\u003e\n\u003cbr\u003e\nBelow are some example of SQL. \u003cbr\u003e\n\u003cbr\u003e\nThey use the Temp Table Name to be : tempTable\u003cbr\u003e\n\u003cbr\u003e\nThe schem of the Input Dataframe is : id, price, lotsize, bedrooms, bathrms, stories, driveway, recroom, fullbase, gashw, airco, garagepl, prefarea\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003e avg price of house\u003c/h4\u003e\n\u003cbr\u003e\nselect avg(price) as avg_price from tempTable\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003e bedrooms with avg price greater than 10000\u003c/h4\u003e\n\u003cbr\u003e\nselect bedrooms, avg_price from\u003cbr\u003e\n(select bedrooms, avg(price) as avg_price from tempTable group by bedrooms) as temp where avg_price \u003e 10000\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003e house details with bedrooms avg price greater than 10000\u003c/h4\u003e\n\u003cbr\u003e\nselect tempTable.* , inner_table.avg_price from\u003cbr\u003e\n(select bedrooms, avg_price from\u003cbr\u003e\n(select bedrooms, avg(price) as avg_price from tempTable group by bedrooms) as temp where avg_price \u003e 10000) as inner_table\u003cbr\u003e\nJOIN tempTable ON(inner_table.bedrooms \u003d tempTable.bedrooms)\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeSQL",
+      "x": "806.888px",
+      "y": "756.081px",
+      "hint": "Whenever the table is changed, go to Schema tab and Refresh the Schema",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "tempTable",
+          "value": "fire_temp_table",
+          "widget": "textfield",
+          "title": "Temp Table",
+          "description": "Temp Table Name to be used",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "sql",
+          "value": "SELECT date, store, item, sales, mean_sales, mean_7_sales, lag as lag7 FROM fire_temp_table",
+          "widget": "textarea_large",
+          "type": "sql",
+          "title": "SQL",
+          "description": "SQL to be run",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "schema",
+          "value": "",
+          "widget": "tab",
+          "title": "Schema",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"date\",\"store\",\"item\",\"sales\",\"mean_sales\",\"mean_7_sales\",\"lag7\"]",
+          "widget": "schema_col_names",
+          "title": "Output Column Names",
+          "description": "Name of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"DATE\",\"INTEGER\",\"INTEGER\",\"INTEGER\",\"DOUBLE\",\"DOUBLE\",\"INTEGER\"]",
+          "widget": "schema_col_types",
+          "title": "Output Column Types",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\",\"\",\"\",\"\",\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Output Column Formats",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "32",
+      "name": "Lag7",
+      "description": "",
+      "details": "This node Generates a new Dataframe with Analytics Column appended to the incoming Dataframe.\u003cbr\u003e\n\u003cbr\u003e\nAnalytics Column is populated with value based on the Window Function selected.\u003cbr\u003e",
+      "examples": "Incoming Dataframe has following rows:\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    \u003cbr\u003e\n------------------------------------------------------------------------\u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40\u003cbr\u003e\nE02       |    LISA        |    HR      |    45000     |    35\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40\u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45\u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24\u003cbr\u003e\n\u003cbr\u003e\n\u003ch2\u003e If WindowAnalytics node is configured as below:\u003c/h2\u003e\n\u003cbr\u003e\nPARTITIONBY      :     DEPT\u003cbr\u003e\nORDERBY          :     AGE\u003cbr\u003e\nWINDOW FUNCTION  :     first_value\u003cbr\u003e\nANALYTICS COLUMN :     SALARY : integer\u003cbr\u003e\nWINDOW OFFSET    :     1\u003cbr\u003e\n\u003cbr\u003e\nthen outgoing Dataframe would be created as below \u003cbr\u003e\nwhere incoming Dataframe is partitioned by [DEPT] and data is sorted by [AGE] and [FIRST VALUE] of Analytics Column [SALARY] within a partition is appended as new column:\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    |    first_value\u003cbr\u003e\n---------------------------------------------------------------------------------------\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24     |    60000\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25     |    60000\u003cbr\u003e\nE02       |    LISA        |    HR      |    45000     |    35     |    60000\u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40     |    60000\u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25     |    40000\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40     |    40000\u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45     |    40000\u003cbr\u003e\n\u003cbr\u003e\n\u003ch2\u003e If WindowAnalytics node is configured as below:\u003c/h2\u003e\n\u003cbr\u003e\nPARTITIONBY      :     DEPT\u003cbr\u003e\nORDERBY          :     AGE\u003cbr\u003e\nWINDOW FUNCTION  :     lead\u003cbr\u003e\nANALYTICS COLUMN :     SALARY : integer\u003cbr\u003e\nWINDOW OFFSET    :     2\u003cbr\u003e\n\u003cbr\u003e\nthen outgoing Dataframe would be created as below \u003cbr\u003e\nwhere incoming Dataframe is partitioned by [DEPT] and data is sorted by [AGE] and \u003cbr\u003e\nAnalytics Column [SALARY] value of leading 2 or [WINDOW OFFSET] rows within a partition is appended as new column:\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    |    first_value\u003cbr\u003e\n---------------------------------------------------------------------------------------\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24     |    45000\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25     |    50000\u003cbr\u003e\nE02       |    LISA        |    HR      |    45000     |    35     |    \u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40     |    \u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25     |    60000\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40     |    \u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45     |\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeWindowAnalytics",
+      "x": "795.87px",
+      "y": "608.888px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "partitionByCols",
+          "value": "store",
+          "widget": "textfield",
+          "title": "PartitionBy",
+          "description": "partition column names separated by comma(,) ",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "orderByCols",
+          "value": "date",
+          "widget": "textfield",
+          "title": "OrderBy",
+          "description": "order by column names separated by comma(,)",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "windowFunction",
+          "value": "lag",
+          "widget": "array",
+          "title": "Window Function",
+          "description": "Window Function Name",
+          "optionsArray": [
+            "first_value",
+            "last_value",
+            "lag",
+            "lead"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "analyticsCol",
+          "value": "sales",
+          "widget": "variable",
+          "title": "Analytics Column",
+          "description": "",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "window_offset",
+          "value": "7",
+          "widget": "textfield",
+          "title": "Window Offset",
+          "description": "It\u0027s used in lead and lag functions.",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "33",
+      "name": "Lag1",
+      "description": "",
+      "details": "This node Generates a new Dataframe with Analytics Column appended to the incoming Dataframe.\u003cbr\u003e\n\u003cbr\u003e\nAnalytics Column is populated with value based on the Window Function selected.\u003cbr\u003e",
+      "examples": "Incoming Dataframe has following rows:\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    \u003cbr\u003e\n------------------------------------------------------------------------\u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40\u003cbr\u003e\nE02       |    LISA        |    HR      |    45000     |    35\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40\u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45\u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24\u003cbr\u003e\n\u003cbr\u003e\n\u003ch2\u003e If WindowAnalytics node is configured as below:\u003c/h2\u003e\n\u003cbr\u003e\nPARTITIONBY      :     DEPT\u003cbr\u003e\nORDERBY          :     AGE\u003cbr\u003e\nWINDOW FUNCTION  :     first_value\u003cbr\u003e\nANALYTICS COLUMN :     SALARY : integer\u003cbr\u003e\nWINDOW OFFSET    :     1\u003cbr\u003e\n\u003cbr\u003e\nthen outgoing Dataframe would be created as below \u003cbr\u003e\nwhere incoming Dataframe is partitioned by [DEPT] and data is sorted by [AGE] and [FIRST VALUE] of Analytics Column [SALARY] within a partition is appended as new column:\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    |    first_value\u003cbr\u003e\n---------------------------------------------------------------------------------------\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24     |    60000\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25     |    60000\u003cbr\u003e\nE02       |    LISA        |    HR      |    45000     |    35     |    60000\u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40     |    60000\u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25     |    40000\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40     |    40000\u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45     |    40000\u003cbr\u003e\n\u003cbr\u003e\n\u003ch2\u003e If WindowAnalytics node is configured as below:\u003c/h2\u003e\n\u003cbr\u003e\nPARTITIONBY      :     DEPT\u003cbr\u003e\nORDERBY          :     AGE\u003cbr\u003e\nWINDOW FUNCTION  :     lead\u003cbr\u003e\nANALYTICS COLUMN :     SALARY : integer\u003cbr\u003e\nWINDOW OFFSET    :     2\u003cbr\u003e\n\u003cbr\u003e\nthen outgoing Dataframe would be created as below \u003cbr\u003e\nwhere incoming Dataframe is partitioned by [DEPT] and data is sorted by [AGE] and \u003cbr\u003e\nAnalytics Column [SALARY] value of leading 2 or [WINDOW OFFSET] rows within a partition is appended as new column:\u003cbr\u003e\n\u003cbr\u003e\nEMP_CD    |    EMP_NAME    |    DEPT    |    SALARY    |    AGE    |    first_value\u003cbr\u003e\n---------------------------------------------------------------------------------------\u003cbr\u003e\nE07       |    BELLA       |    HR      |    60000     |    24     |    45000\u003cbr\u003e\nE03       |    MARTIN      |    HR      |    20000     |    25     |    50000\u003cbr\u003e\nE02       |    LISA        |    HR      |    45000     |    35     |    \u003cbr\u003e\nE01       |    ANTHONY     |    HR      |    50000     |    40     |    \u003cbr\u003e\nE06       |    JOE         |    SALES   |    40000     |    25     |    60000\u003cbr\u003e\nE04       |    DAVID       |    SALES   |    55000     |    40     |    \u003cbr\u003e\nE05       |    MARK        |    SALES   |    60000     |    45     |\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeWindowAnalytics",
+      "x": "596.922px",
+      "y": "751.266px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "partitionByCols",
+          "value": "store",
+          "widget": "textfield",
+          "title": "PartitionBy",
+          "description": "partition column names separated by comma(,) ",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "orderByCols",
+          "value": "date",
+          "widget": "textfield",
+          "title": "OrderBy",
+          "description": "order by column names separated by comma(,)",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "windowFunction",
+          "value": "lag",
+          "widget": "array",
+          "title": "Window Function",
+          "description": "Window Function Name",
+          "optionsArray": [
+            "first_value",
+            "last_value",
+            "lag",
+            "lead"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "analyticsCol",
+          "value": "sales",
+          "widget": "variable",
+          "title": "Analytics Column",
+          "description": "",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "window_offset",
+          "value": "1",
+          "widget": "textfield",
+          "title": "Window Offset",
+          "description": "It\u0027s used in lead and lag functions.",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "34",
+      "name": "PrintNRows",
+      "description": "Prints the specified number of records in the DataFrame. It is useful for seeing intermediate output",
+      "details": "This node is used to print incoming dataset.\u003cbr\u003e\n\u003cbr\u003e\nNumber of rows that needs to be printed can be configured in the node.\u003cbr\u003e",
+      "examples": "",
+      "type": "transform",
+      "nodeClass": "fire.nodes.util.NodePrintFirstNRows",
+      "x": "154.987px",
+      "y": "761.156px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "title",
+          "value": "Row Values",
+          "widget": "textfield",
+          "title": "Title",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "n",
+          "value": "10",
+          "widget": "textfield",
+          "title": "Num Rows to Print",
+          "description": "number of rows to be printed",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "displayDataType",
+          "value": "true",
+          "widget": "array",
+          "title": "Display Data Type",
+          "description": "If true display rows DataType",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "target": "26",
+      "id": 1
+    },
+    {
+      "source": "26",
+      "target": "24",
+      "id": 2
+    },
+    {
+      "source": "24",
+      "target": "27",
+      "id": 3
+    },
+    {
+      "source": "27",
+      "target": "32",
+      "id": 4
+    },
+    {
+      "source": "32",
+      "target": "31",
+      "id": 5
+    },
+    {
+      "source": "31",
+      "target": "33",
+      "id": 6
+    },
+    {
+      "source": "33",
+      "target": "28",
+      "id": 7
+    },
+    {
+      "source": "28",
+      "target": "34",
+      "id": 8
+    }
+  ],
+  "dataSetDetails": [],
+  "engine": "pyspark"
+}

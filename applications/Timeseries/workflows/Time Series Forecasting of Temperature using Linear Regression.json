@@ -1,0 +1,1781 @@
+{
+  "name": "Time Series Forecasting of Temperature using Linear Regression",
+  "uuid": "1ddc2d58-1c54-4343-b733-8a2c368ae816",
+  "category": "Time Series",
+  "description": "Time Series Forecast - Temperature",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "ReadCSV",
+      "description": "It reads in CSV files and creates a DataFrame from it",
+      "details": "\u003ch2\u003eRead CSV Details\u003c/h2\u003e\n\u003cbr\u003e\nThis node reads CSV files and creates a DataFrame from it. It can read either from a single file, or a directory containing multiple files. The user can configure the below fields to parse the file.\u003cbr\u003e\n\u003cbr\u003e\nThe user can choose the \u003cb\u003eOutput storage level\u003c/b\u003e from the drop down. The options in the dropdown can be one of the following:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY\u003c/b\u003e          Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, some partitions will not be cached and will be recomputed on the fly each time they qre needed. This is the default level.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_AND_DISK\u003c/b\u003e       Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, store the partitions that do nott fit on disk, and read them from there when they are needed.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY_SER\u003c/b\u003e        Store RDD as serialized Java objects (one byte array per partition). This is generally more space-efficient than deserialized objects, especially when using a fast serializer, but more CPU-intensive to read.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_AND_DISK_SER\u003c/b\u003e    Similar to MEMORY_ONLY_SER, but spill partitions that do not fit in memory to disk instead of recomputing them on the fly each time they\u0027re needed.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eDISK_ONLY\u003c/b\u003e              Store the RDD partitions only on disk.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY_2, MEMORY_AND_DISK_2 others \u003c/b\u003e . Same as the levels above, but replicate each partition on two cluster nodes.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eOFF_HEAP\u003c/b\u003e               Similar to MEMORY_ONLY_SER, but store the data in off-heap memory. This requires off-heap memory to be enabled.\u003c/li\u003e\n\u003c/ul\u003e\nThe user need to provide a data file \u003cb\u003ePath\u003c/b\u003e to read the data from. This is a required field.\u003cbr\u003e\n\u003cbr\u003e\nThe user can choose the \u003cb\u003eSeperator\u003c/b\u003e used in the data file to parse it. The default seperator is \u003cb\u003e( , )\u003c/b\u003e comma.\u003cbr\u003e\n\u003cbr\u003e\nIn the \u003cb\u003eHeader\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e if the data file has header.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e Otherwise.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eDrop special character in column name\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e If you want to remove the special characters from column names.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e Otherwise.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eMode\u003c/b\u003e field, one can choose from the below options in the dropdown:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003ePERMISSIVE\u003c/b\u003e When the parser meets a corrupt field in a records, it sets the value of the field to NULL and continues to the next record.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eDROPMALFORMED\u003c/b\u003e ignores the whole corrupted records.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eFAILFAST\u003c/b\u003e throws and exception when it meets corrupted records.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eEnforce Schema\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e The specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e The schema will be validated against all headers in CSV files in the case when the header option is set to \u003cb\u003etrue\u003c/b\u003e.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eWhether to add input file as a column in dataframe\u003c/b\u003e field, once can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e There will be a new column will be added in the dataframe at the end which can be seen in the schema columns. One can enter the name of this column.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e This functionality is disabled and the dataframe consists of only the columns read from the data file.\u003c/li\u003e\n\u003c/ul\u003e\nAfter the above options are chosen, one can click on \u003cb\u003eRefresh Schema\u003c/b\u003e to see th final columns.\u003cbr\u003e\nEven now, users can add/delete columns using \u003cb\u003e+\u003c/b\u003e button next to Refresh schema and \u003cb\u003e-\u003c/b\u003e button next to column names.\u003cbr\u003e",
+      "examples": "",
+      "type": "dataset",
+      "nodeClass": "fire.nodes.dataset.NodeDatasetCSV",
+      "x": "32.9271px",
+      "y": "133.919px",
+      "hint": "Whenever the file is changed, Refresh the Schema",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "path",
+          "value": "data/dailyMinimum.csv",
+          "widget": "textfield",
+          "title": "Path",
+          "description": "Path of the Text file/directory",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "separator",
+          "value": ",",
+          "widget": "textfield",
+          "title": "Separator",
+          "description": "CSV Separator",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "header",
+          "value": "true",
+          "widget": "array",
+          "title": "Header",
+          "description": "Whether the file has a header row",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "dropSpecialCharacterInColumnName",
+          "value": "true",
+          "widget": "array",
+          "title": "Drop Special Character In ColumnName",
+          "description": "Whether to drop the Special Characters and Spaces in Column Name.",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "mode",
+          "value": "PERMISSIVE",
+          "widget": "array",
+          "title": "Mode",
+          "description": "Mode for dealing with corrupt records during parsing.",
+          "optionsArray": [
+            "PERMISSIVE",
+            "DROPMALFORMED",
+            "FAILFAST"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "enforceSchema",
+          "value": "true",
+          "widget": "array",
+          "title": "Enforce Schema",
+          "description": "If it is set to true, the specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored. If the option is set to false, the schema will be validated against all headers in CSV files in the case when the header option is set to true.",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "addInputFileName",
+          "value": "false",
+          "widget": "array",
+          "title": "Whether to add Input File Name as a column in the Dataframe",
+          "description": "Add the new field:input_file_name",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"Date\",\"Temp\"]",
+          "widget": "schema_col_names",
+          "title": "Column Names for the CSV",
+          "description": "New Output Columns of the SQL",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"DATE\",\"DOUBLE\"]",
+          "widget": "schema_col_types",
+          "title": "Column Types for the CSV",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Column Formats for the CSV",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "2",
+      "name": "Compute More Time Features",
+      "description": "This node extracts year, dayofmonth, dayofyear, weekofyear, dayofweek, quarter, hour, minute, second \u0026 season.",
+      "details": "\u003ch2\u003eTime Functions Details\u003c/h2\u003e\n\u003cbr\u003e\nThis node can be used to extract year, dayofmonth, dayofyear, weekofyear, dayofweek, quarter, hour, minute, second \u0026 season values from a Timestamp column.\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003eInput\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   TIMESTAMP COLUMN NAME :-The input column is selected here and it should be of Timestamp or Date type\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4\u003eOutput\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   The values that can be selected are Year, DayOfMonth, DayOfYear, WeekOfYear, DayOfWeek, Quarter, Hour, Minute, Second \u0026 Season.\u003c/li\u003e\n\u003cli\u003e   These values are created as new columns of the Output DataFrame.\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4\u003eExample\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   InputColumn Value :- 2022-01-29\u003c/li\u003e\n\u003cli\u003e   Selected Options :- Season,Quarter,DayOfMonth\u003c/li\u003e\n\u003cli\u003e   Output would be InputColumn_season :- Winter   InputColumn_quarter :-\t1    InputColumn_dayofmonth :-29\u003c/li\u003e\n\u003c/ul\u003e",
+      "examples": "If Incoming Dataframe has following timestamp column:\u003cbr\u003e\n\u003cbr\u003e\nINV_DATE\u003cbr\u003e\n-------------------------------------------\u003cbr\u003e\n2022-07-01 10:11:12.0\u003cbr\u003e\n\u003cbr\u003e\nafter execution of TimeFunctions node following columns would get added to the outgoing Dataframe for the above row:\u003cbr\u003e\n\u003cbr\u003e\nCOLUMN_NAME             |    VALUE\u003cbr\u003e\n----------------------------------------\u003cbr\u003e\nINV_DATE_year           |    2022\u003cbr\u003e\nINV_DATE_month          |    7\u003cbr\u003e\nNV_DATE_dayofmonth      |    1\u003cbr\u003e\nINV_DATE_dayofyear      |    182\u003cbr\u003e\nINV_DATE_weekofyear     |    26\u003cbr\u003e\nINV_DATE_dayofweek      |    5\u003cbr\u003e\nINV_DATE_quarter        |    3\u003cbr\u003e\nINV_DATE_hour           |    10\u003cbr\u003e\nINV_DATE_minute         |    11\u003cbr\u003e\nINV_DATE_second         |    12\u003cbr\u003e\nINV_DATE_season         |    Summer\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeTimeFunctions",
+      "x": "29.9219px",
+      "y": "260.922px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "timeStampCol",
+          "value": "Date",
+          "widget": "variable",
+          "title": "TimeStamp Column Name",
+          "description": "input column name",
+          "datatypes": [
+            "timestamp",
+            "date"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "timeFunctions",
+          "value": "[\"month\",\"dayofmonth\",\"dayofyear\",\"weekofyear\",\"dayofweek\",\"season\"]",
+          "widget": "array_multiple",
+          "title": "Time Functions",
+          "description": "Time Functions Name",
+          "optionsArray": [
+            "year",
+            "month",
+            "dayofmonth",
+            "dayofyear",
+            "weekofyear",
+            "dayofweek",
+            "quarter",
+            "hour",
+            "minute",
+            "second",
+            "season"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "3",
+      "name": "Index the Season Column",
+      "description": "StringIndexer encodes a string column of labels to a column of label indices",
+      "details": "StringIndexer encodes a string column of labels to a column of label indices. The indices are in [0, numLabels), ordered by label frequencies, so the most frequent label gets index 0.\u003cbr\u003e\nIf the input column is numeric, we cast it to string and index the string values.\u003cbr\u003e\n                                                                                                  \u003cbr\u003e\nMore at Spark MLlib/ML docs page : \u003ca href\u003d\"https://spark.apache.org/docs/2.0.0/ml-features.html#stringindexer\" target\u003d\"_blank\"\u003espark.apache.org/docs/2.0.0/ml-features.html#stringindexer\u003c/a\u003e\u003cbr\u003e",
+      "examples": "\u003ch2\u003eThe below example is available at : \u003ca href\u003d\"https://spark.apache.org/docs/2.0.0/ml-features.html#stringindexer\" target\u003d\"_blank\"\u003espark.apache.org/docs/2.0.0/ml-features.html#stringindexer\u003c/a\u003e\u003c/h2\u003e\n\u003cbr\u003e\nimport org.apache.spark.ml.feature.StringIndexer\u003cbr\u003e\n\u003cbr\u003e\nval df \u003d spark.createDataFrame(\u003cbr\u003e\n  Seq((0, \"a\"), (1, \"b\"), (2, \"c\"), (3, \"a\"), (4, \"a\"), (5, \"c\"))\u003cbr\u003e\n).toDF(\"id\", \"category\")\u003cbr\u003e\n\u003cbr\u003e\nval indexer \u003d new StringIndexer()\u003cbr\u003e\n  .setInputCol(\"category\")\u003cbr\u003e\n  .setOutputCol(\"categoryIndex\")\u003cbr\u003e\n\u003cbr\u003e\nval indexed \u003d indexer.fit(df).transform(df)\u003cbr\u003e\nindexed.show()\u003cbr\u003e",
+      "type": "ml-transformer",
+      "nodeClass": "fire.nodes.ml.NodeStringIndexer",
+      "x": "291.891px",
+      "y": "262.859px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "handleInvalid",
+          "value": "error",
+          "widget": "array",
+          "title": "Handle Invalid",
+          "description": "Invalid entries to be skipped or thrown error",
+          "optionsArray": [
+            "skip",
+            "error"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "inputCols",
+          "value": "[\"Date_season\"]",
+          "widget": "variables_list_select",
+          "title": "Input Columns",
+          "description": "Input columns for encoding",
+          "datatypes": [
+            "string"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputCols",
+          "value": "[\"date_season_indexer\"]",
+          "widget": "variables_list_textfield",
+          "title": "Output Columns",
+          "description": "Output columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "stringOrderType",
+          "value": "frequencyDesc",
+          "widget": "array",
+          "title": "String Order Type",
+          "description": "Param for how to order labels of string column",
+          "optionsArray": [
+            "frequencyDesc",
+            "frequencyAsc",
+            "alphabetDesc",
+            "alphabetAsc"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "4",
+      "name": "Convert Int Columns to Double",
+      "description": "This node creates a new DataFrame by casting the specified input columns to a new data type",
+      "details": "This node creates a new DataFrame by casting the specified input columns to a new data type. All the selected columns would be cast to the specified data type.\u003cbr\u003e\n\u003cbr\u003e\nThe boolean field Replace Existing Columns indicates whether the existing column should be replaced or a new column should be created.\u003cbr\u003e",
+      "examples": "If incoming Dataframe has following columns with below specified datatype:\u003cbr\u003e\n\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e CUST_ID : Integer\u003c/li\u003e\n\u003cli\u003e CUST_NAME : String\u003c/li\u003e\n\u003cli\u003e DOB : Datetime\u003c/li\u003e\n\u003cli\u003e AGE : Integer\u003c/li\u003e\n\u003c/ul\u003e\nand [DOB] and [AGE] are selected for casting to [STRING] datatype then outgoing Dataframe would have below datatypes:\u003cbr\u003e\n\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e CUST_ID : Integer\u003c/li\u003e\n\u003cli\u003e CUST_NAME : String\u003c/li\u003e\n\u003cli\u003e DOB : String\u003c/li\u003e\n\u003cli\u003e AGE : String\u003c/li\u003e\n\u003c/ul\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeCastColumnType",
+      "x": "286.906px",
+      "y": "126.891px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "inputCols",
+          "value": "[\"Date_month\",\"Date_dayofmonth\",\"Date_dayofyear\",\"Date_weekofyear\",\"Date_dayofweek\"]",
+          "widget": "variables",
+          "title": "Columns",
+          "description": "Columns to be cast to new data type",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColType",
+          "value": "DOUBLE",
+          "widget": "array",
+          "title": "New Data Type",
+          "description": "New data type for the selected columns (INTEGER, DOUBLE, STRING, LONG, SHORT)",
+          "optionsArray": [
+            "BOOLEAN",
+            "BYTE",
+            "DATE",
+            "DECIMAL",
+            "DOUBLE",
+            "FLOAT",
+            "INTEGER",
+            "LONG",
+            "SHORT",
+            "STRING",
+            "TIMESTAMP"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "replaceExistingCols",
+          "value": "true",
+          "widget": "array",
+          "title": "Replace Existing Cols?",
+          "description": "Whether to replace existing columns or create new ones?",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "5",
+      "name": "Assemble the features to be used in forecasting",
+      "description": "Merges multiple columns into a vector column",
+      "details": "VectorAssembler is a transformer that combines a given list of columns into a single vector column. \u003cbr\u003e\nIt is useful for combining raw features and features generated by different feature transformers into a single feature vector, in order to train ML models like logistic regression and decision trees. \u003cbr\u003e\nVectorAssembler accepts the following input column types: all numeric types, boolean type, and vector type. In each row, the values of the input columns will be concatenated into a vector in the specified order.\u003cbr\u003e\n\u003cbr\u003e\nMore details are available at:\u003cbr\u003e\n\u003cbr\u003e\n\u003ca href\u003d\"https://spark.apache.org/docs/latest/ml-features.html#vectorassembler\" target\u003d\"_blank\"\u003espark.apache.org/docs/latest/ml-features.html#vectorassembler\u003c/a\u003e\u003cbr\u003e",
+      "examples": "\u003ch2\u003eThe below example is available at : \u003ca href\u003d\"https://spark.apache.org/docs/latest/ml-features.html#vectorassembler\" target\u003d\"_blank\"\u003espark.apache.org/docs/latest/ml-features.html#vectorassembler\u003c/a\u003e\u003c/h2\u003e\n\u003cbr\u003e\nimport org.apache.spark.ml.feature.VectorAssembler\u003cbr\u003e\nimport org.apache.spark.ml.linalg.Vectors\u003cbr\u003e\n\u003cbr\u003e\nval dataset \u003d spark.createDataFrame(\u003cbr\u003e\n  Seq((0, 18, 1.0, Vectors.dense(0.0, 10.0, 0.5), 1.0))\u003cbr\u003e\n).toDF(\"id\", \"hour\", \"mobile\", \"userFeatures\", \"clicked\")\u003cbr\u003e\n\u003cbr\u003e\nval assembler \u003d new VectorAssembler()\u003cbr\u003e\n  .setInputCols(Array(\"hour\", \"mobile\", \"userFeatures\"))\u003cbr\u003e\n  .setOutputCol(\"features\")\u003cbr\u003e\n\u003cbr\u003e\nval output \u003d assembler.transform(dataset)\u003cbr\u003e\nprintln(\"Assembled columns \u0027hour\u0027, \u0027mobile\u0027, \u0027userFeatures\u0027 to vector column \u0027features\u0027\")\u003cbr\u003e\noutput.select(\"features\", \"clicked\").show(false)\u003cbr\u003e",
+      "type": "ml-transformer",
+      "nodeClass": "fire.nodes.ml.NodeVectorAssembler",
+      "x": "549.891px",
+      "y": "128.859px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "inputCols",
+          "value": "[\"Date_month\",\"Date_dayofmonth\",\"Date_dayofyear\",\"Date_weekofyear\",\"Date_dayofweek\",\"date_season_indexer\"]",
+          "widget": "variables",
+          "title": "Input Columns",
+          "description": "Input column of type - all numeric, boolean and vector",
+          "datatypes": [
+            "integer",
+            "long",
+            "double",
+            "float",
+            "vectorudt"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputCol",
+          "value": "feature_vector",
+          "widget": "textfield",
+          "title": "Output Column",
+          "description": "Output column name",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "handleInvalid",
+          "value": "error",
+          "widget": "array",
+          "title": "HandleInvalid",
+          "description": "How to handle invalid data (NULL values). Options are \u0027skip\u0027 (filter out rows with invalid data), \u0027error\u0027 (throw an error), or \u0027keep\u0027 (return relevant number of NaN in the output).",
+          "optionsArray": [
+            "error",
+            "skip",
+            "keep"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "7",
+      "name": "LinearRegression",
+      "description": "The interface for working with linear regression models and model summaries is similar to the logistic regression case.",
+      "details": "The interface for working with linear regression models and model summaries is similar to the logistic regression case.\u003cbr\u003e\n\u003cbr\u003e\nWhen fitting LinearRegressionModel without intercept on dataset with constant nonzero column by “l-bfgs” solver, Spark MLlib outputs zero coefficients for constant nonzero columns. This behavior is the same as R glmnet but different from LIBSVM.\u003cbr\u003e\n\u003cbr\u003e\nMore details are available at : \u003ca href\u003d\"http://spark.apache.org/docs/latest/ml-classification-regression.html#linear-regression\" target\u003d\"_blank\"\u003espark.apache.org/docs/latest/ml-classification-regression.html#linear-regression\u003c/a\u003e\u003cbr\u003e",
+      "examples": "Below example is available at : \u003ca href\u003d\"https://spark.apache.org/docs/latest/ml-classification-regression.html#linear-regression\" target\u003d\"_blank\"\u003espark.apache.org/docs/latest/ml-classification-regression.html#linear-regression\u003c/a\u003e\u003cbr\u003e\n\u003cbr\u003e\nimport org.apache.spark.ml.regression.LinearRegression\u003cbr\u003e\n\u003cbr\u003e\n// Load training data\u003cbr\u003e\nval training \u003d spark.read.format(\"libsvm\")\u003cbr\u003e\n  .load(\"data/mllib/sample_linear_regression_data.txt\")\u003cbr\u003e\n\u003cbr\u003e\nval lr \u003d new LinearRegression()\u003cbr\u003e\n  .setMaxIter(10)\u003cbr\u003e\n  .setRegParam(0.3)\u003cbr\u003e\n  .setElasticNetParam(0.8)\u003cbr\u003e\n\u003cbr\u003e\n// Fit the model\u003cbr\u003e\nval lrModel \u003d lr.fit(training)\u003cbr\u003e\n\u003cbr\u003e\n// Print the coefficients and intercept for linear regression\u003cbr\u003e\nprintln(s\"Coefficients: ${lrModel.coefficients} Intercept: ${lrModel.intercept}\")\u003cbr\u003e\n\u003cbr\u003e\n// Summarize the model over the training set and print out some metrics\u003cbr\u003e\nval trainingSummary \u003d lrModel.summary\u003cbr\u003e\nprintln(s\"numIterations: ${trainingSummary.totalIterations}\")\u003cbr\u003e\nprintln(s\"objectiveHistory: [${trainingSummary.objectiveHistory.mkString(\",\")}]\")\u003cbr\u003e\ntrainingSummary.residuals.show()\u003cbr\u003e\nprintln(s\"RMSE: ${trainingSummary.rootMeanSquaredError}\")\u003cbr\u003e\nprintln(s\"r2: ${trainingSummary.r2}\")\u003cbr\u003e",
+      "type": "ml-estimator",
+      "nodeClass": "fire.nodes.ml.NodeLinearRegression",
+      "x": "739.812px",
+      "y": "248.875px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "modelIdentifier",
+          "value": "",
+          "widget": "textfield",
+          "title": "Model Identifier",
+          "description": "modelIdentifier starts with $loop \u0026 columns names separated with underscore. Example: $loop_columnName1_columnName2.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "featuresCol",
+          "value": "feature_vector",
+          "widget": "variable",
+          "title": "Features Column",
+          "description": "Features column of type vectorUDT for model fitting",
+          "datatypes": [
+            "vectorudt"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "labelCol",
+          "value": "Temp",
+          "widget": "variable",
+          "title": "Label Column",
+          "description": "The label column for model fitting",
+          "datatypes": [
+            "double"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "predictionCol",
+          "value": "",
+          "widget": "textfield",
+          "title": "Prediction Column",
+          "description": "The prediction column created during model scoring",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "fitIntercept",
+          "value": "true",
+          "widget": "array",
+          "title": "Fit Intercept",
+          "description": "Whether to fit an intercept term",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "maxIter",
+          "value": "100",
+          "widget": "textfield",
+          "title": "Maximum Iterations",
+          "description": "Maximum number of iterations (\u003e\u003d 0)",
+          "datatypes": [
+            "integer"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "regParam",
+          "value": "0.0",
+          "widget": "textfield",
+          "title": "Regularization Param",
+          "description": "The regularization parameter",
+          "datatypes": [
+            "double"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "elasticNetParam",
+          "value": "0.0",
+          "widget": "textfield",
+          "title": "ElasticNet Param",
+          "description": "The ElasticNet mixing parameter. For alpha \u003d 0, the penalty is an L2 penalty. For alpha \u003d 1, it is an L1 penalty",
+          "datatypes": [
+            "double"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "solver",
+          "value": "l-bfgs",
+          "widget": "array",
+          "title": "Solver",
+          "description": "The solver algorithm for optimization",
+          "optionsArray": [
+            "auto",
+            "l-bfgs",
+            "normal"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "standardization",
+          "value": "true",
+          "widget": "array",
+          "title": "Standardization",
+          "description": "Whether to standardize the training features before fitting the model",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "tol",
+          "value": "1E-6",
+          "widget": "textfield",
+          "title": "Tolerance",
+          "description": "The convergence tolerance for iterative algorithms",
+          "datatypes": [
+            "double"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "weightCol",
+          "value": "",
+          "widget": "textfield",
+          "title": "Weight Column",
+          "description": "If the \u0027weight column\u0027 is not specified, all instances are treated equally with a weight 1.0",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "aggregationDepth",
+          "value": "2",
+          "widget": "textfield",
+          "title": "Aggregation Depth",
+          "description": "depth for treeAggregate",
+          "datatypes": [
+            "integer"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "epsilon",
+          "value": "1.35",
+          "widget": "textfield",
+          "title": "Epsilon",
+          "description": "The shape parameter to control the amount of robustness",
+          "datatypes": [
+            "double"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "loss",
+          "value": "squaredError",
+          "widget": "array",
+          "title": "Loss",
+          "description": "The loss function to be optimized",
+          "optionsArray": [
+            "squaredError",
+            "huber"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "gridSearch",
+          "value": "",
+          "widget": "tab",
+          "title": "Grid Search",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "regParamGrid",
+          "value": "",
+          "widget": "textfield",
+          "title": "Regularization Param Grid Search",
+          "description": "Regularization Parameters for Grid Search",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "elasticNetGrid",
+          "value": "",
+          "widget": "textfield",
+          "title": "ElasticNet Param Grid Search",
+          "description": "ElasticNet Parameters for Grid Search",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "maxIterGrid",
+          "value": "",
+          "widget": "textfield",
+          "title": "MaxIter Param Grid Search",
+          "description": "Maximum iteration Parameters for Grid Search",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "8",
+      "name": "Predict",
+      "description": "Predict node takes in a DataFrame and Model and makes predictions",
+      "details": "Predict node takes in a DataFrame and Model and makes predictions on the data using the Model.\u003cbr\u003e",
+      "examples": "",
+      "type": "ml-predict",
+      "nodeClass": "fire.nodes.ml.NodePredict",
+      "x": "836.891px",
+      "y": "432.906px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "9",
+      "name": "PrintNRows",
+      "description": "Prints the specified number of records in the DataFrame. It is useful for seeing intermediate output",
+      "details": "\u003ch2\u003ePrint N Rows Details\u003c/h2\u003e\n\u003cbr\u003e\nThis node is used to print the first N rows from the incoming dataframe.\u003cbr\u003e\n\u003cbr\u003e\nThe Number of rows that needs to be printed can be configured in the node.\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003eInput\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   TITLE :- The title of a graph can be set here.\u003c/li\u003e\n\u003cli\u003e   NUM ROWS TO PRINT :- An integer value(N) is passed here to print the first N rows(by default N\u003d10).\u003c/li\u003e\n\u003cli\u003e   DISPLAY DATA TYPE :- To display the datatype of the output dataframe it needs to be set as true else false(by default it is true).\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4\u003eOutput\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   This node can be used to quickly analyze and validate the incoming Dataframe or to print the output.\u003c/li\u003e\n\u003c/ul\u003e",
+      "examples": "",
+      "type": "transform",
+      "nodeClass": "fire.nodes.util.NodePrintFirstNRows",
+      "x": "1061.88px",
+      "y": "434.891px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "title",
+          "value": "Row Values",
+          "widget": "textfield",
+          "title": "Title",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "n",
+          "value": "10",
+          "widget": "textfield",
+          "title": "Num Rows to Print",
+          "description": "number of rows to be printed",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "displayDataType",
+          "value": "true",
+          "widget": "array",
+          "title": "Display Data Type",
+          "description": "If true display rows DataType",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "10",
+      "name": "ReadCSV",
+      "description": "It reads in CSV files and creates a DataFrame from it",
+      "details": "\u003ch2\u003eRead CSV Details\u003c/h2\u003e\n\u003cbr\u003e\nThis node reads CSV files and creates a DataFrame from it. It can read either from a single file, or a directory containing multiple files. The user can configure the below fields to parse the file.\u003cbr\u003e\n\u003cbr\u003e\nThe user can choose the \u003cb\u003eOutput storage level\u003c/b\u003e from the drop down. The options in the dropdown can be one of the following:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY\u003c/b\u003e          Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, some partitions will not be cached and will be recomputed on the fly each time they qre needed. This is the default level.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_AND_DISK\u003c/b\u003e       Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, store the partitions that do nott fit on disk, and read them from there when they are needed.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY_SER\u003c/b\u003e        Store RDD as serialized Java objects (one byte array per partition). This is generally more space-efficient than deserialized objects, especially when using a fast serializer, but more CPU-intensive to read.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_AND_DISK_SER\u003c/b\u003e    Similar to MEMORY_ONLY_SER, but spill partitions that do not fit in memory to disk instead of recomputing them on the fly each time they\u0027re needed.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eDISK_ONLY\u003c/b\u003e              Store the RDD partitions only on disk.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY_2, MEMORY_AND_DISK_2 others \u003c/b\u003e . Same as the levels above, but replicate each partition on two cluster nodes.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eOFF_HEAP\u003c/b\u003e               Similar to MEMORY_ONLY_SER, but store the data in off-heap memory. This requires off-heap memory to be enabled.\u003c/li\u003e\n\u003c/ul\u003e\nThe user need to provide a data file \u003cb\u003ePath\u003c/b\u003e to read the data from. This is a required field.\u003cbr\u003e\n\u003cbr\u003e\nThe user can choose the \u003cb\u003eSeperator\u003c/b\u003e used in the data file to parse it. The default seperator is \u003cb\u003e( , )\u003c/b\u003e comma.\u003cbr\u003e\n\u003cbr\u003e\nIn the \u003cb\u003eHeader\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e if the data file has header.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e Otherwise.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eDrop special character in column name\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e If you want to remove the special characters from column names.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e Otherwise.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eMode\u003c/b\u003e field, one can choose from the below options in the dropdown:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003ePERMISSIVE\u003c/b\u003e When the parser meets a corrupt field in a records, it sets the value of the field to NULL and continues to the next record.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eDROPMALFORMED\u003c/b\u003e ignores the whole corrupted records.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eFAILFAST\u003c/b\u003e throws and exception when it meets corrupted records.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eEnforce Schema\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e The specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e The schema will be validated against all headers in CSV files in the case when the header option is set to \u003cb\u003etrue\u003c/b\u003e.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eWhether to add input file as a column in dataframe\u003c/b\u003e field, once can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e There will be a new column will be added in the dataframe at the end which can be seen in the schema columns. One can enter the name of this column.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e This functionality is disabled and the dataframe consists of only the columns read from the data file.\u003c/li\u003e\n\u003c/ul\u003e\nAfter the above options are chosen, one can click on \u003cb\u003eRefresh Schema\u003c/b\u003e to see th final columns.\u003cbr\u003e\nEven now, users can add/delete columns using \u003cb\u003e+\u003c/b\u003e button next to Refresh schema and \u003cb\u003e-\u003c/b\u003e button next to column names.\u003cbr\u003e",
+      "examples": "",
+      "type": "dataset",
+      "nodeClass": "fire.nodes.dataset.NodeDatasetCSV",
+      "x": "42.9427px",
+      "y": "588.961px",
+      "hint": "Whenever the file is changed, Refresh the Schema",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "path",
+          "value": "data/FutureTempeartureForecast.dat",
+          "widget": "textfield",
+          "title": "Path",
+          "description": "Path of the Text file/directory",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "separator",
+          "value": ",",
+          "widget": "textfield",
+          "title": "Separator",
+          "description": "CSV Separator",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "header",
+          "value": "true",
+          "widget": "array",
+          "title": "Header",
+          "description": "Whether the file has a header row",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "dropSpecialCharacterInColumnName",
+          "value": "true",
+          "widget": "array",
+          "title": "Drop Special Character In ColumnName",
+          "description": "Whether to drop the Special Characters and Spaces in Column Name.",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "mode",
+          "value": "PERMISSIVE",
+          "widget": "array",
+          "title": "Mode",
+          "description": "Mode for dealing with corrupt records during parsing.",
+          "optionsArray": [
+            "PERMISSIVE",
+            "DROPMALFORMED",
+            "FAILFAST"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "enforceSchema",
+          "value": "true",
+          "widget": "array",
+          "title": "Enforce Schema",
+          "description": "If it is set to true, the specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored. If the option is set to false, the schema will be validated against all headers in CSV files in the case when the header option is set to true.",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "addInputFileName",
+          "value": "false",
+          "widget": "array",
+          "title": "Whether to add Input File Name as a column in the Dataframe",
+          "description": "Add the new field:input_file_name",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"FutureDate\"]",
+          "widget": "schema_col_names",
+          "title": "Column Names for the CSV",
+          "description": "New Output Columns of the SQL",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"DATE\"]",
+          "widget": "schema_col_types",
+          "title": "Column Types for the CSV",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Column Formats for the CSV",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "11",
+      "name": "Compute More Time Features",
+      "description": "This node extracts year, dayofmonth, dayofyear, weekofyear, dayofweek, quarter, hour, minute, second \u0026 season.",
+      "details": "\u003ch2\u003eTime Functions Details\u003c/h2\u003e\n\u003cbr\u003e\nThis node can be used to extract year, dayofmonth, dayofyear, weekofyear, dayofweek, quarter, hour, minute, second \u0026 season values from a Timestamp column.\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003eInput\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   TIMESTAMP COLUMN NAME :-The input column is selected here and it should be of Timestamp or Date type\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4\u003eOutput\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   The values that can be selected are Year, DayOfMonth, DayOfYear, WeekOfYear, DayOfWeek, Quarter, Hour, Minute, Second \u0026 Season.\u003c/li\u003e\n\u003cli\u003e   These values are created as new columns of the Output DataFrame.\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4\u003eExample\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e   InputColumn Value :- 2022-01-29\u003c/li\u003e\n\u003cli\u003e   Selected Options :- Season,Quarter,DayOfMonth\u003c/li\u003e\n\u003cli\u003e   Output would be InputColumn_season :- Winter   InputColumn_quarter :-\t1    InputColumn_dayofmonth :-29\u003c/li\u003e\n\u003c/ul\u003e",
+      "examples": "If Incoming Dataframe has following timestamp column:\u003cbr\u003e\n\u003cbr\u003e\nINV_DATE\u003cbr\u003e\n-------------------------------------------\u003cbr\u003e\n2022-07-01 10:11:12.0\u003cbr\u003e\n\u003cbr\u003e\nafter execution of TimeFunctions node following columns would get added to the outgoing Dataframe for the above row:\u003cbr\u003e\n\u003cbr\u003e\nCOLUMN_NAME             |    VALUE\u003cbr\u003e\n----------------------------------------\u003cbr\u003e\nINV_DATE_year           |    2022\u003cbr\u003e\nINV_DATE_month          |    7\u003cbr\u003e\nNV_DATE_dayofmonth      |    1\u003cbr\u003e\nINV_DATE_dayofyear      |    182\u003cbr\u003e\nINV_DATE_weekofyear     |    26\u003cbr\u003e\nINV_DATE_dayofweek      |    5\u003cbr\u003e\nINV_DATE_quarter        |    3\u003cbr\u003e\nINV_DATE_hour           |    10\u003cbr\u003e\nINV_DATE_minute         |    11\u003cbr\u003e\nINV_DATE_second         |    12\u003cbr\u003e\nINV_DATE_season         |    Summer\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeTimeFunctions",
+      "x": "35.9062px",
+      "y": "442.891px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "timeStampCol",
+          "value": "FutureDate",
+          "widget": "variable",
+          "title": "TimeStamp Column Name",
+          "description": "input column name",
+          "datatypes": [
+            "timestamp",
+            "date"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "timeFunctions",
+          "value": "[\"month\",\"dayofmonth\",\"dayofyear\",\"weekofyear\",\"dayofweek\",\"season\"]",
+          "widget": "array_multiple",
+          "title": "Time Functions",
+          "description": "Time Functions Name",
+          "optionsArray": [
+            "year",
+            "month",
+            "dayofmonth",
+            "dayofyear",
+            "weekofyear",
+            "dayofweek",
+            "quarter",
+            "hour",
+            "minute",
+            "second",
+            "season"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "12",
+      "name": "StringIndexer",
+      "description": "StringIndexer encodes a string column of labels to a column of label indices",
+      "details": "StringIndexer encodes a string column of labels to a column of label indices. The indices are in [0, numLabels), ordered by label frequencies, so the most frequent label gets index 0.\u003cbr\u003e\nIf the input column is numeric, we cast it to string and index the string values.\u003cbr\u003e\n                                                                                                  \u003cbr\u003e\nMore at Spark MLlib/ML docs page : \u003ca href\u003d\"https://spark.apache.org/docs/2.0.0/ml-features.html#stringindexer\" target\u003d\"_blank\"\u003espark.apache.org/docs/2.0.0/ml-features.html#stringindexer\u003c/a\u003e\u003cbr\u003e",
+      "examples": "\u003ch2\u003eThe below example is available at : \u003ca href\u003d\"https://spark.apache.org/docs/2.0.0/ml-features.html#stringindexer\" target\u003d\"_blank\"\u003espark.apache.org/docs/2.0.0/ml-features.html#stringindexer\u003c/a\u003e\u003c/h2\u003e\n\u003cbr\u003e\nimport org.apache.spark.ml.feature.StringIndexer\u003cbr\u003e\n\u003cbr\u003e\nval df \u003d spark.createDataFrame(\u003cbr\u003e\n  Seq((0, \"a\"), (1, \"b\"), (2, \"c\"), (3, \"a\"), (4, \"a\"), (5, \"c\"))\u003cbr\u003e\n).toDF(\"id\", \"category\")\u003cbr\u003e\n\u003cbr\u003e\nval indexer \u003d new StringIndexer()\u003cbr\u003e\n  .setInputCol(\"category\")\u003cbr\u003e\n  .setOutputCol(\"categoryIndex\")\u003cbr\u003e\n\u003cbr\u003e\nval indexed \u003d indexer.fit(df).transform(df)\u003cbr\u003e\nindexed.show()\u003cbr\u003e",
+      "type": "ml-transformer",
+      "nodeClass": "fire.nodes.ml.NodeStringIndexer",
+      "x": "297.891px",
+      "y": "443.875px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "handleInvalid",
+          "value": "error",
+          "widget": "array",
+          "title": "Handle Invalid",
+          "description": "Invalid entries to be skipped or thrown error",
+          "optionsArray": [
+            "skip",
+            "error"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "inputCols",
+          "value": "[\"FutureDate_season\"]",
+          "widget": "variables_list_select",
+          "title": "Input Columns",
+          "description": "Input columns for encoding",
+          "datatypes": [
+            "string"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputCols",
+          "value": "[\"FutureDate_season_inde\"]",
+          "widget": "variables_list_textfield",
+          "title": "Output Columns",
+          "description": "Output columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "stringOrderType",
+          "value": "frequencyDesc",
+          "widget": "array",
+          "title": "String Order Type",
+          "description": "Param for how to order labels of string column",
+          "optionsArray": [
+            "frequencyDesc",
+            "frequencyAsc",
+            "alphabetDesc",
+            "alphabetAsc"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "13",
+      "name": "CastColumnType",
+      "description": "This node creates a new DataFrame by casting the specified input columns to a new data type",
+      "details": "This node creates a new DataFrame by casting the specified input columns to a new data type. All the selected columns would be cast to the specified data type.\u003cbr\u003e\n\u003cbr\u003e\nThe boolean field Replace Existing Columns indicates whether the existing column should be replaced or a new column should be created.\u003cbr\u003e",
+      "examples": "If incoming Dataframe has following columns with below specified datatype:\u003cbr\u003e\n\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e CUST_ID : Integer\u003c/li\u003e\n\u003cli\u003e CUST_NAME : String\u003c/li\u003e\n\u003cli\u003e DOB : Datetime\u003c/li\u003e\n\u003cli\u003e AGE : Integer\u003c/li\u003e\n\u003c/ul\u003e\nand [DOB] and [AGE] are selected for casting to [STRING] datatype then outgoing Dataframe would have below datatypes:\u003cbr\u003e\n\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e CUST_ID : Integer\u003c/li\u003e\n\u003cli\u003e CUST_NAME : String\u003c/li\u003e\n\u003cli\u003e DOB : String\u003c/li\u003e\n\u003cli\u003e AGE : String\u003c/li\u003e\n\u003c/ul\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeCastColumnType",
+      "x": "299.938px",
+      "y": "593.891px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "inputCols",
+          "value": "[\"FutureDate_month\",\"FutureDate_dayofmonth\",\"FutureDate_dayofyear\",\"FutureDate_weekofyear\",\"FutureDate_dayofweek\"]",
+          "widget": "variables",
+          "title": "Columns",
+          "description": "Columns to be cast to new data type",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColType",
+          "value": "DOUBLE",
+          "widget": "array",
+          "title": "New Data Type",
+          "description": "New data type for the selected columns (INTEGER, DOUBLE, STRING, LONG, SHORT)",
+          "optionsArray": [
+            "BOOLEAN",
+            "BYTE",
+            "DATE",
+            "DECIMAL",
+            "DOUBLE",
+            "FLOAT",
+            "INTEGER",
+            "LONG",
+            "SHORT",
+            "STRING",
+            "TIMESTAMP"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "replaceExistingCols",
+          "value": "true",
+          "widget": "array",
+          "title": "Replace Existing Cols?",
+          "description": "Whether to replace existing columns or create new ones?",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "14",
+      "name": "VectorAssembler",
+      "description": "Merges multiple columns into a vector column",
+      "details": "VectorAssembler is a transformer that combines a given list of columns into a single vector column. \u003cbr\u003e\nIt is useful for combining raw features and features generated by different feature transformers into a single feature vector, in order to train ML models like logistic regression and decision trees. \u003cbr\u003e\nVectorAssembler accepts the following input column types: all numeric types, boolean type, and vector type. In each row, the values of the input columns will be concatenated into a vector in the specified order.\u003cbr\u003e\n\u003cbr\u003e\nMore details are available at:\u003cbr\u003e\n\u003cbr\u003e\n\u003ca href\u003d\"https://spark.apache.org/docs/latest/ml-features.html#vectorassembler\" target\u003d\"_blank\"\u003espark.apache.org/docs/latest/ml-features.html#vectorassembler\u003c/a\u003e\u003cbr\u003e",
+      "examples": "\u003ch2\u003eThe below example is available at : \u003ca href\u003d\"https://spark.apache.org/docs/latest/ml-features.html#vectorassembler\" target\u003d\"_blank\"\u003espark.apache.org/docs/latest/ml-features.html#vectorassembler\u003c/a\u003e\u003c/h2\u003e\n\u003cbr\u003e\nimport org.apache.spark.ml.feature.VectorAssembler\u003cbr\u003e\nimport org.apache.spark.ml.linalg.Vectors\u003cbr\u003e\n\u003cbr\u003e\nval dataset \u003d spark.createDataFrame(\u003cbr\u003e\n  Seq((0, 18, 1.0, Vectors.dense(0.0, 10.0, 0.5), 1.0))\u003cbr\u003e\n).toDF(\"id\", \"hour\", \"mobile\", \"userFeatures\", \"clicked\")\u003cbr\u003e\n\u003cbr\u003e\nval assembler \u003d new VectorAssembler()\u003cbr\u003e\n  .setInputCols(Array(\"hour\", \"mobile\", \"userFeatures\"))\u003cbr\u003e\n  .setOutputCol(\"features\")\u003cbr\u003e\n\u003cbr\u003e\nval output \u003d assembler.transform(dataset)\u003cbr\u003e\nprintln(\"Assembled columns \u0027hour\u0027, \u0027mobile\u0027, \u0027userFeatures\u0027 to vector column \u0027features\u0027\")\u003cbr\u003e\noutput.select(\"features\", \"clicked\").show(false)\u003cbr\u003e",
+      "type": "ml-transformer",
+      "nodeClass": "fire.nodes.ml.NodeVectorAssembler",
+      "x": "548.922px",
+      "y": "597.891px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "inputCols",
+          "value": "[\"FutureDate_month\",\"FutureDate_dayofmonth\",\"FutureDate_dayofyear\",\"FutureDate_weekofyear\",\"FutureDate_dayofweek\",\"FutureDate_season_inde\"]",
+          "widget": "variables",
+          "title": "Input Columns",
+          "description": "Input column of type - all numeric, boolean and vector",
+          "datatypes": [
+            "integer",
+            "long",
+            "double",
+            "float",
+            "vectorudt"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputCol",
+          "value": "feature_vector",
+          "widget": "textfield",
+          "title": "Output Column",
+          "description": "Output column name",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "handleInvalid",
+          "value": "error",
+          "widget": "array",
+          "title": "HandleInvalid",
+          "description": "How to handle invalid data (NULL values). Options are \u0027skip\u0027 (filter out rows with invalid data), \u0027error\u0027 (throw an error), or \u0027keep\u0027 (return relevant number of NaN in the output).",
+          "optionsArray": [
+            "error",
+            "skip",
+            "keep"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "16",
+      "name": "StickyNote",
+      "description": "Allows capturing Notes on the Workflow",
+      "details": "",
+      "examples": "",
+      "type": "sticky",
+      "nodeClass": "fire.nodes.doc.NodeStickyNote",
+      "x": "52px",
+      "y": "9px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "bgColor",
+          "value": "blue",
+          "widget": "textfield",
+          "title": "Bg Color",
+          "description": "Background of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "width",
+          "value": "431px",
+          "widget": "textfield",
+          "title": "Width",
+          "description": "Width of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "height",
+          "value": "92px",
+          "widget": "textfield",
+          "title": "Height",
+          "description": "Height of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "comment",
+          "value": "\u003cp\u003eBuilds a Linear Regression Model for forecasting temperature.\u003c/p\u003e",
+          "widget": "textarea_rich",
+          "title": "Comment",
+          "description": "Comments for the Workflow",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "17",
+      "name": "StickyNote",
+      "description": "Allows capturing Notes on the Workflow",
+      "details": "",
+      "examples": "",
+      "type": "sticky",
+      "nodeClass": "fire.nodes.doc.NodeStickyNote",
+      "x": "778px",
+      "y": "126px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "bgColor",
+          "value": "gray",
+          "widget": "textfield",
+          "title": "Bg Color",
+          "description": "Background of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "width",
+          "value": "264px",
+          "widget": "textfield",
+          "title": "Width",
+          "description": "Width of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "height",
+          "value": "66px",
+          "widget": "textfield",
+          "title": "Height",
+          "description": "Height of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "comment",
+          "value": "\u003cp\u003eBuild a Linear Regression model for predicting the Temperature\u003c/p\u003e",
+          "widget": "textarea_rich",
+          "title": "Comment",
+          "description": "Comments for the Workflow",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    },
+    {
+      "id": "18",
+      "name": "StickyNote",
+      "description": "Allows capturing Notes on the Workflow",
+      "details": "",
+      "examples": "",
+      "type": "sticky",
+      "nodeClass": "fire.nodes.doc.NodeStickyNote",
+      "x": "766px",
+      "y": "568px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "bgColor",
+          "value": "gray",
+          "widget": "textfield",
+          "title": "Bg Color",
+          "description": "Background of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "width",
+          "value": "348px",
+          "widget": "textfield",
+          "title": "Width",
+          "description": "Width of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "height",
+          "value": "73px",
+          "widget": "textfield",
+          "title": "Height",
+          "description": "Height of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "comment",
+          "value": "\u003cp\u003ePredict on future dates using the model built\u003c/p\u003e",
+          "widget": "textarea_rich",
+          "title": "Comment",
+          "description": "Comments for the Workflow",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "scala"
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "target": "2",
+      "id": 1
+    },
+    {
+      "source": "2",
+      "target": "3",
+      "id": 2
+    },
+    {
+      "source": "3",
+      "target": "4",
+      "id": 3
+    },
+    {
+      "source": "4",
+      "target": "5",
+      "id": 4
+    },
+    {
+      "source": "7",
+      "target": "8",
+      "id": 5
+    },
+    {
+      "source": "8",
+      "target": "9",
+      "id": 6
+    },
+    {
+      "source": "5",
+      "target": "7",
+      "id": 7
+    },
+    {
+      "source": "10",
+      "target": "11",
+      "id": 8
+    },
+    {
+      "source": "11",
+      "target": "12",
+      "id": 9
+    },
+    {
+      "source": "12",
+      "target": "13",
+      "id": 10
+    },
+    {
+      "source": "13",
+      "target": "14",
+      "id": 11
+    },
+    {
+      "source": "14",
+      "target": "8",
+      "id": 12
+    }
+  ],
+  "dataSetDetails": [],
+  "engine": "scala"
+}

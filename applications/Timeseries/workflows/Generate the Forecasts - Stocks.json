@@ -1,0 +1,964 @@
+{
+  "name": "Generate the Forecasts - Stocks",
+  "uuid": "5458e0fc-001e-449b-895a-b6204e9db339",
+  "category": "Prophet",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "ReadCSV",
+      "description": "It reads in CSV files and creates a DataFrame from it",
+      "details": "This node reads CSV files and creates a DataFrame from it.\u003cbr\u003e",
+      "examples": "",
+      "type": "dataset",
+      "nodeClass": "fire.nodes.dataset.NodeDatasetCSV",
+      "x": "20.0312px",
+      "y": "297.016px",
+      "hint": "Whenever the file is changed, Refresh the Schema",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "path",
+          "value": "data/store_item_stock_train.csv",
+          "widget": "textfield",
+          "title": "Path",
+          "description": "Path of the Text file/directory",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "separator",
+          "value": ",",
+          "widget": "textfield",
+          "title": "Separator",
+          "description": "CSV Separator",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "header",
+          "value": "true",
+          "widget": "array",
+          "title": "Header",
+          "description": "Does the file have a header row",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "dropMalformed",
+          "value": "false",
+          "widget": "array",
+          "title": "Drop Malformed",
+          "description": "Whether to drop Malformed records or error",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"date\",\"store\",\"item\",\"sales\"]",
+          "widget": "schema_col_names",
+          "title": "Column Names for the CSV",
+          "description": "New Output Columns of the SQL",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"STRING\",\"INTEGER\",\"INTEGER\",\"INTEGER\"]",
+          "widget": "schema_col_types",
+          "title": "Column Types for the CSV",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\",\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Column Formats for the CSV",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "2",
+      "name": "RowFilter",
+      "description": "This node creates a new DataFrame containing only rows satisfying given condition",
+      "details": "",
+      "examples": "This node creates a new DataFrame containing only rows satisfying the given condition.\u003cbr\u003e\n\u003cbr\u003e\n\u003ch2\u003eExamples of Conditional Expression\u003c/h2\u003e\n\u003cbr\u003e\nBelow are some examples of the Conditions Expression which can be used.\u003cbr\u003e\n\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e col1 \u003e 5 AND col2 \u003e 3\u003c/li\u003e\n\u003c/ul\u003e\n\u003cul\u003e\n\u003cli\u003e name is not NULL\u003c/li\u003e\n\u003c/ul\u003e\n\u003cul\u003e\n\u003cli\u003e name is NULL\u003c/li\u003e\n\u003c/ul\u003e\n\u003cul\u003e\n\u003cli\u003e usd_pledged_real \u003e 0 and (category \u003d \"Narrative Film\" or category \u003d\u003d \"Music\") and goal \u003e 100\u003c/li\u003e\n\u003c/ul\u003e\n\u003cul\u003e\n\u003cli\u003e dt \u003e \u00272021-09-03\u0027  (dt column is of type date)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cul\u003e\n\u003cli\u003e datetime \u003e \u00272011-01-01 00:00:00.0\u0027     (datetime column is of type timestamp)\u003c/li\u003e\n\u003c/ul\u003e\n\u003cul\u003e\n\u003cli\u003e datetime \u003e \u00272011-01-01 00:00:00.0\u0027 and datetime \u003c \u00272016-01-01 00:00:00.0\u0027\u003c/li\u003e\n\u003c/ul\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeRowFilter",
+      "x": "222.141px",
+      "y": "297.156px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "conditionExpr",
+          "value": "store \u003d\u003d 1 and item \u003d\u003d 1",
+          "widget": "textarea_small",
+          "title": "Conditional Expression",
+          "description": "The filtering condition. Rows not satisfying given condition will be excluded from output DataFrame. eg: usd_pledged_real \u003e 0 and (category \u003d 1 or category \u003d\u003d 2) and goal \u003e 100",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "3",
+      "name": "Prophet",
+      "description": "",
+      "details": "",
+      "examples": "",
+      "type": "ml-estimator",
+      "nodeClass": "fire.nodes.ts.NodeProphet",
+      "x": "381.141px",
+      "y": "285.125px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "ds",
+          "value": "date",
+          "widget": "variable",
+          "title": "DS Column",
+          "description": "Date or DateTime variable",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "y",
+          "value": "sales",
+          "widget": "variable",
+          "title": "Y",
+          "description": "Target Variable",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "growth",
+          "value": "linear",
+          "widget": "array",
+          "title": "Growth",
+          "description": "linear or logistic to specify a linear or logistic trend",
+          "optionsArray": [
+            "linear",
+            "logistic"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "yearly_seasonality",
+          "value": "auto",
+          "widget": "array",
+          "title": "Yearly Seasonality",
+          "description": "Fit yearly seasonality.",
+          "optionsArray": [
+            "auto",
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "weekly_seasonality",
+          "value": "auto",
+          "widget": "array",
+          "title": "Weekly Seasonality",
+          "description": "Fit weekly seasonality.",
+          "optionsArray": [
+            "auto",
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "daily_seasonality",
+          "value": "auto",
+          "widget": "array",
+          "title": "Daily Seasonality",
+          "description": "Fit daily seasonality.",
+          "optionsArray": [
+            "auto",
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "seasonality_mode",
+          "value": "additive",
+          "widget": "array",
+          "title": "Seasonality Mode",
+          "description": "additive(default) or multiplicative",
+          "optionsArray": [
+            "additive",
+            "multiplicative"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "interval_width",
+          "value": "0.95",
+          "widget": "textfield",
+          "title": "Interval Width",
+          "description": "Float, width of the uncertainty intervals provided for the forecast",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "changepoints",
+          "value": "",
+          "widget": "textfield",
+          "title": "Changepoints",
+          "description": "List of dates at which to include potential changepoints. If not specified, potential changepoints are selected automatically.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "n_changepoints",
+          "value": "25",
+          "widget": "textfield",
+          "title": "N Changepoints",
+          "description": "Number of potential changepoints to include. Not used if input `changepoints` is supplied. If `changepoints` is not supplied, then n_changepoints potential changepoints are selected uniformly from the first `changepoint_range` proportion of the history.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "changepoint_range",
+          "value": "0.8",
+          "widget": "textfield",
+          "title": "Changepoint Range",
+          "description": "Proportion of history in which trend changepoints will be estimated. Defaults to 0.8 for the first 80%. Not used if `changepoints` is specified.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "seasonality_prior_scale",
+          "value": "10.0",
+          "widget": "textfield",
+          "title": "Seasonality Prior Scale",
+          "description": "Parameter modulating the strength of the seasonality model. Larger values allow the model to fit larger seasonal fluctuations, smaller values dampen the seasonality.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "holidays_prior_scale",
+          "value": "10.0",
+          "widget": "textfield",
+          "title": "Holidays Prior Scale",
+          "description": "Parameter modulating the strength of the holiday components model, unless overridden in the holidays input. changepoint_prior_scale: Parameter modulating the flexibility of the automatic changepoint selection. Large values will allow many changepoints, small values will allow few changepoints.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "mcmc_samples",
+          "value": "0",
+          "widget": "textfield",
+          "title": "mcmc samples",
+          "description": "Integer, if greater than 0, will do full Bayesian inference with the specified number of MCMC samples. If 0, will do MAP estimation.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "uncertainty_samples",
+          "value": "1000",
+          "widget": "textfield",
+          "title": "Uncertainty Samples",
+          "description": "Number of simulated draws used to estimate uncertainty intervals. Settings this value to 0 or False will disable uncertainty estimation and speed up the calculation.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "pyspark"
+    },
+    {
+      "id": "4",
+      "name": "SQL",
+      "description": "This node runs the given SQL on the incoming DataFrame",
+      "details": "This node receives an input data frame, creates a temporary table on top of that data frame.\u003cbr\u003e\nAllows the user to write a SQL which would be executed on the temporary table.\u003cbr\u003e\nThe resulting data frame of running the SQL is passed on to the next node.\u003cbr\u003e",
+      "examples": "\u003ch2\u003eSQL Examples\u003c/h2\u003e\n\u003cbr\u003e\nBelow are some example of SQL. \u003cbr\u003e\n\u003cbr\u003e\nThey use the Temp Table Name to be : tempTable\u003cbr\u003e\n\u003cbr\u003e\nThe schem of the Input Dataframe is : id, price, lotsize, bedrooms, bathrms, stories, driveway, recroom, fullbase, gashw, airco, garagepl, prefarea\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003e avg price of house\u003c/h4\u003e\n\u003cbr\u003e\nselect avg(price) as avg_price from tempTable\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003e bedrooms with avg price greater than 10000\u003c/h4\u003e\n\u003cbr\u003e\nselect bedrooms, avg_price from\u003cbr\u003e\n(select bedrooms, avg(price) as avg_price from tempTable group by bedrooms) as temp where avg_price \u003e 10000\u003cbr\u003e\n\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003e house details with bedrooms avg price greater than 10000\u003c/h4\u003e\n\u003cbr\u003e\nselect tempTable.* , inner_table.avg_price from\u003cbr\u003e\n(select bedrooms, avg_price from\u003cbr\u003e\n(select bedrooms, avg(price) as avg_price from tempTable group by bedrooms) as temp where avg_price \u003e 10000) as inner_table\u003cbr\u003e\nJOIN tempTable ON(inner_table.bedrooms \u003d tempTable.bedrooms)\u003cbr\u003e",
+      "type": "transform",
+      "nodeClass": "fire.nodes.etl.NodeSQL",
+      "x": "395.922px",
+      "y": "425.922px",
+      "hint": "Whenever the table is changed, go to Schema tab and Refresh the Schema",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "tempTable",
+          "value": "fire_temp_table",
+          "widget": "textfield",
+          "title": "Temp Table",
+          "description": "Temp Table Name to be used",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "sql",
+          "value": "SELECT CAST(to_date(ds) as STRING) as forecast_date,\nyhat as sales_pred_mean,\nyhat_lower as sales_pred_lower,\nyhat_upper as sales_pred_upper from fire_temp_table",
+          "widget": "textarea_large",
+          "type": "sql",
+          "title": "SQL",
+          "description": "SQL to be run",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "schema",
+          "value": "",
+          "widget": "tab",
+          "title": "Schema",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"forecast_date\",\"sales_pred_mean\",\"sales_pred_lower\",\"sales_pred_upper\"]",
+          "widget": "schema_col_names",
+          "title": "Output Column Names",
+          "description": "Name of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"STRING\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\"]",
+          "widget": "schema_col_types",
+          "title": "Output Column Types",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\",\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Output Column Formats",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "5",
+      "name": "JoinUsingSQL",
+      "description": "This node registers the incoming DataFrames as temporary tables and executes the SQL provided",
+      "details": "\u003cul\u003e\n\u003cli\u003e This node receives two input data frames, creates two temporary tables on top of that data frames.\u003c/li\u003e\n\u003cli\u003e Allows the user to write a SQL query to join these two temporary tables.\u003c/li\u003e\n\u003cli\u003e The resulting data frame of running the SQL is passed on to the next node.\u003c/li\u003e\n\u003c/ul\u003e",
+      "examples": "\u003ch2\u003eExamples\u003c/h2\u003e\n\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e select col1, col2, col3, col4, col5, col6 from tempTable1 a LEFT JOIN tempTable2 b ON(a.col1 \u003d b.col5)\u003c/li\u003e\n\u003cli\u003e select col1, col2, col3 from tempTable1 a JOIN  tempTable2 b ON(a.col2 \u003d b.col3)\u003c/li\u003e\n\u003c/ul\u003e",
+      "type": "join",
+      "nodeClass": "fire.nodes.etl.NodeJoinUsingSQL",
+      "x": "225.516px",
+      "y": "440.516px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "tempTables",
+          "value": "[\"tempTable1\",\"tempTable2\"]",
+          "widget": "array_of_values",
+          "title": "Temp Table Names",
+          "description": "Temp Table Name to be used",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "sql",
+          "value": "select \n forecast_date, \n sales_pred_mean,\n sales_pred_lower,\t\n sales_pred_upper \n date,\t\n store,\t\n item,\t\n sales\nfrom tempTable1 a LEFT JOIN tempTable2 b ON(a.forecast_date \u003d b.date)",
+          "widget": "textarea_large",
+          "type": "sql",
+          "title": "SQL",
+          "description": "SQL to be run",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "schema",
+          "value": "",
+          "widget": "tab",
+          "title": "Schema",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"forecast_date\",\"sales_pred_mean\",\"sales_pred_lower\",\"date\",\"store\",\"item\",\"sales\"]",
+          "widget": "schema_col_names",
+          "title": "Column Names for the CSV",
+          "description": "New Output Columns of the SQL",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"STRING\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"INTEGER\",\"INTEGER\",\"INTEGER\"]",
+          "widget": "schema_col_types",
+          "title": "Column Types for the CSV",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\",\"\",\"\",\"\",\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Column Formats for the CSV",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "6",
+      "name": "SaveCSV",
+      "description": "Saves the DataFrame into the specified location in CSV Format",
+      "details": "",
+      "examples": "",
+      "type": "transform",
+      "nodeClass": "fire.nodes.save.NodeSaveCSV",
+      "x": "224.188px",
+      "y": "550.188px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "path",
+          "value": "data/output_demandforecast",
+          "widget": "textfield",
+          "title": "Path",
+          "description": "Path where to save the CSV files",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "saveMode",
+          "value": "Overwrite",
+          "widget": "array",
+          "title": "Save Mode",
+          "description": "Whether to Append, Overwrite or Error if the path Exists",
+          "optionsArray": [
+            "Append",
+            "Overwrite",
+            "ErrorIfExists",
+            "Ignore"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "header",
+          "value": "true",
+          "widget": "array",
+          "title": "Header",
+          "description": "Should a Header Row be saved with each File?",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "partitionColNames",
+          "value": "[]",
+          "widget": "variables",
+          "title": "Partition Column Names",
+          "description": "Partition Column Names",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "7",
+      "name": "StickyNote",
+      "description": "Allows capturing Notes on the Workflow",
+      "details": "",
+      "examples": "",
+      "type": "sticky",
+      "nodeClass": "fire.nodes.doc.NodeStickyNote",
+      "x": "28px",
+      "y": "0px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "bgColor",
+          "value": "blue",
+          "widget": "textfield",
+          "title": "Bg Color",
+          "description": "Background of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "width",
+          "value": "785px",
+          "widget": "textfield",
+          "title": "Width",
+          "description": "Width of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "height",
+          "value": "219px",
+          "widget": "textfield",
+          "title": "Height",
+          "description": "Height of note",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "comment",
+          "value": "\u003ch2\u003eSafety Stock Calculations for Inventory Management\u003c/h2\u003e\u003cp\u003e\u003cbr\u003e\u003c/p\u003e\u003cp\u003e\u003cspan style\u003d\"color: rgb(51, 51, 51);\"\u003ePeriodically, we need to order product to replenish our inventory. When we do this, we have in mind a future period for which we are attempting to address demand along with an estimate the demand in that period.\u003c/span\u003e\u003c/p\u003e\u003cp\u003e\u003cbr\u003e\u003c/p\u003e\u003cp\u003e\u003cspan style\u003d\"color: rgb(51, 51, 51);\"\u003e\u003cspan class\u003d\"ql-cursor\"\u003eï»¿\u003c/span\u003eWhen actual demand exceeds our forecasts, we run the risk of a stockout (out of stock) situation with its associated potential loss of sales and reduced customer satisfaction. To avoid this, we often include additional units of stock, above the forecasted demand, in our replenishment orders. The amount of this\u0026nbsp;\u003c/span\u003e\u003cem style\u003d\"color: rgb(51, 51, 51);\"\u003esafety stock\u003c/em\u003e\u003cspan style\u003d\"color: rgb(51, 51, 51);\"\u003e\u0026nbsp;depends on our estimates of variability in the demand for this upcoming period and the percentage of time we are willing to risk an out of stock situation.\u003c/span\u003e\u003c/p\u003e",
+          "widget": "textarea_rich",
+          "title": "Comment",
+          "description": "Comments for the Workflow",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "8",
+      "name": "Prophet Make Future Dataframe",
+      "description": "",
+      "details": "",
+      "examples": "",
+      "type": "transform",
+      "nodeClass": "fire.nodes.ts.NodeProphetMakeFutureDataframe",
+      "x": "584px",
+      "y": "277px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "future_period",
+          "value": "24",
+          "widget": "textfield",
+          "title": "Future Period",
+          "description": "Int number of periods to forecast forward.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "frequency",
+          "value": "MS",
+          "widget": "textfield",
+          "title": "frequency",
+          "description": "Any valid frequency for pd.date_range, such as \u0027D\u0027 or \u0027M\u0027.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "include_history",
+          "value": "true",
+          "widget": "array",
+          "title": "Include History",
+          "description": "Boolean to include the historical dates in the dataframe for predictions",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "pyspark"
+    },
+    {
+      "id": "9",
+      "name": "Prophet Predict",
+      "description": "",
+      "details": "",
+      "examples": "",
+      "type": "ml-predict",
+      "nodeClass": "fire.nodes.ts.NodeProphetPredict",
+      "x": "604px",
+      "y": "437px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "pyspark"
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "target": "2",
+      "id": 1
+    },
+    {
+      "source": "2",
+      "target": "3",
+      "id": 2
+    },
+    {
+      "source": "4",
+      "target": "5",
+      "id": 3
+    },
+    {
+      "source": "2",
+      "target": "5",
+      "id": 4
+    },
+    {
+      "source": "5",
+      "target": "6",
+      "id": 5
+    },
+    {
+      "source": "3",
+      "target": "8",
+      "id": 6
+    },
+    {
+      "source": "8",
+      "target": "9",
+      "id": 7
+    },
+    {
+      "source": "9",
+      "target": "4",
+      "id": 8
+    }
+  ],
+  "dataSetDetails": [],
+  "engine": "pyspark"
+}

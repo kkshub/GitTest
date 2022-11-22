@@ -1,0 +1,37 @@
+{
+  "responseId": 0,
+  "createdBy": 1,
+  "updatedBy": 1,
+  "dateLastUpdated": "Nov 22, 2022 4:22:20 PM",
+  "appPermission": {
+    "appsView": true,
+    "appsModify": true,
+    "appsExecute": true
+  },
+  "id": 9,
+  "name": "app1",
+  "status": "saved",
+  "category": "",
+  "description": "",
+  "appStages": [
+    {
+      "id": 32,
+      "name": "international",
+      "status": "COMPLETED",
+      "stageType": "upload",
+      "stageDetails": "{\"components\":[{\"label\":\"Text Field\",\"tableView\":true,\"key\":\"textField\",\"type\":\"textfield\",\"input\":true}]}",
+      "sequenceId": 1,
+      "projectId": 0,
+      "condition": ""
+    }
+  ],
+  "executionType": "Workflow",
+  "projectId": 45,
+  "executionId": 302,
+  "jobName": "",
+  "notebookPath": "",
+  "uuid": "DD",
+  "icon": "{\"type\":\"svg\",\"icon\":\"images/webappIcon.svg\"}",
+  "usecase": "",
+  "syncedWithGithub": false
+}

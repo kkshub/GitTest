@@ -1,0 +1,26 @@
+{
+  "responseId": 0,
+  "createdBy": 1,
+  "updatedBy": 0,
+  "dateLastUpdated": "Nov 24, 2022 3:01:38 PM",
+  "appPermission": {
+    "appsView": true,
+    "appsModify": true,
+    "appsExecute": true
+  },
+  "id": 11,
+  "name": "test",
+  "status": "ACTIVE",
+  "category": "",
+  "description": "",
+  "appStages": [],
+  "executionType": "Workflow",
+  "projectId": 45,
+  "executionId": 302,
+  "jobName": "",
+  "notebookPath": "",
+  "uuid": "TEST",
+  "icon": "{\"type\":\"svg\",\"icon\":\"images/webappIcon.svg\"}",
+  "usecase": "",
+  "syncedWithGithub": false
+}

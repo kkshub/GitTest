@@ -1,0 +1,9 @@
+{
+  "name": "empty-workflow",
+  "uuid": "b56fdaae-bda0-402b-bac1-711d5e92983b",
+  "category": "-",
+  "nodes": [],
+  "edges": [],
+  "dataSetDetails": [],
+  "engine": "scala"
+}

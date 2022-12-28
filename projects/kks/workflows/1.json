@@ -1,0 +1,297 @@
+{
+  "name": "1",
+  "uuid": "a065d8a1-ec5c-4d3b-84b5-c8b95bc71d0a",
+  "category": "-",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Read CSV",
+      "description": "It reads in CSV files and creates a DataFrame from it",
+      "details": "\u003ch2\u003eRead CSV Details\u003c/h2\u003e\n\u003cbr\u003e\nThis node reads CSV files and creates a DataFrame from it. It can read either from a single file, or a directory containing multiple files. The user can configure the below fields to parse the file.\u003cbr\u003e\n\u003cbr\u003e\nThe user can choose the \u003cb\u003eOutput storage level\u003c/b\u003e from the drop down. The options in the dropdown can be one of the following:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY\u003c/b\u003e          Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, some partitions will not be cached and will be recomputed on the fly each time they qre needed. This is the default level.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_AND_DISK\u003c/b\u003e       Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, store the partitions that do nott fit on disk, and read them from there when they are needed.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY_SER\u003c/b\u003e        Store RDD as serialized Java objects (one byte array per partition). This is generally more space-efficient than deserialized objects, especially when using a fast serializer, but more CPU-intensive to read.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_AND_DISK_SER\u003c/b\u003e    Similar to MEMORY_ONLY_SER, but spill partitions that do not fit in memory to disk instead of recomputing them on the fly each time they\u0027re needed.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eDISK_ONLY\u003c/b\u003e              Store the RDD partitions only on disk.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eMEMORY_ONLY_2, MEMORY_AND_DISK_2 others \u003c/b\u003e . Same as the levels above, but replicate each partition on two cluster nodes.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eOFF_HEAP\u003c/b\u003e               Similar to MEMORY_ONLY_SER, but store the data in off-heap memory. This requires off-heap memory to be enabled.\u003c/li\u003e\n\u003c/ul\u003e\nThe user need to provide a data file \u003cb\u003ePath\u003c/b\u003e to read the data from. This is a required field.\u003cbr\u003e\n\u003cbr\u003e\nThe user can choose the \u003cb\u003eSeperator\u003c/b\u003e used in the data file to parse it. The default seperator is \u003cb\u003e( , )\u003c/b\u003e comma.\u003cbr\u003e\n\u003cbr\u003e\nIn the \u003cb\u003eHeader\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e if the data file has header.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e Otherwise.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eDrop special character in column name\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e If you want to remove the special characters from column names.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e Otherwise.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eMode\u003c/b\u003e field, one can choose from the below options in the dropdown:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003ePERMISSIVE\u003c/b\u003e When the parser meets a corrupt field in a records, it sets the value of the field to NULL and continues to the next record.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eDROPMALFORMED\u003c/b\u003e ignores the whole corrupted records.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003eFAILFAST\u003c/b\u003e throws an exception when it meets corrupted records.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eEnforce Schema\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e The specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e The schema will be validated against all headers in CSV files in the case when the header option is set to \u003cb\u003efalse\u003c/b\u003e.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eWhether to add input file as a column in dataframe\u003c/b\u003e field, one can choose:\u003cbr\u003e\n\u003cul\u003e\n\u003cli\u003e \u003cb\u003etrue\u003c/b\u003e There will be a new column added in the dataframe at the end which can be seen in the schema columns. One can enter the name of this column.\u003c/li\u003e\n\u003cli\u003e \u003cb\u003efalse\u003c/b\u003e This functionality is disabled and the dataframe consists of only the columns read from the data file.\u003c/li\u003e\n\u003c/ul\u003e\nIn the \u003cb\u003eENCODING\u003c/b\u003e field one can specify the encoding type to be used for reading the files. By default it is set as \u003cb\u003eUTF-8\u003c/b\u003e.\u003cbr\u003e\n\u003cbr\u003e\nThe \u003cb\u003eQUOTE\u003c/b\u003e field sets a single character used for escaping quoted values where the separator can be part of the value. The default value for this is \u003cb\u003e( \" )\u003c/b\u003e, a double quote.\u003cbr\u003e\n\u003cbr\u003e\nThe \u003cb\u003eESCAPE\u003c/b\u003e field sets a single character used for escaping quotes inside an already quoted value. The default value for this is \u003cb\u003e( \\ )\u003c/b\u003e, a backslash.\t\u003cbr\u003e\n\u003cbr\u003e\nAfter the above options are set, one can click on \u003cb\u003eRefresh Schema\u003c/b\u003e to see the final columns.\u003cbr\u003e\nUsers can still add or delete columns using \u003cb\u003e+\u003c/b\u003e button next to theRefresh schema and \u003cb\u003e-\u003c/b\u003e button next to the column names.\u003cbr\u003e",
+      "examples": "",
+      "type": "dataset",
+      "nodeClass": "fire.nodes.dataset.NodeDatasetCSV",
+      "x": "284px",
+      "y": "208px",
+      "hint": "Whenever the file is changed, Refresh the Schema",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "path",
+          "value": "C:\\Users\\NMBR\\data\\13zpallagi.csv",
+          "widget": "textfield",
+          "title": "Path",
+          "description": "Path of the file/directory",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "separator",
+          "value": ",",
+          "widget": "textfield",
+          "title": "Separator",
+          "description": "CSV Separator",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "header",
+          "value": "true",
+          "widget": "array",
+          "title": "Header",
+          "description": "Whether the file has a header row",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "dropSpecialCharacterInColumnName",
+          "value": "true",
+          "widget": "array",
+          "title": "Drop Special Character In ColumnName",
+          "description": "Whether to drop the Special Characters and Spaces in Column Name.",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "mode",
+          "value": "PERMISSIVE",
+          "widget": "array",
+          "title": "Mode",
+          "description": "Mode for dealing with corrupt records during parsing.",
+          "optionsArray": [
+            "PERMISSIVE",
+            "DROPMALFORMED",
+            "FAILFAST"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "enforceSchema",
+          "value": "false",
+          "widget": "array",
+          "title": "Enforce Schema",
+          "description": "If it is set to true, the specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored. If the option is set to false, the schema will be validated against all headers in CSV files in the case when the header option is set to true.",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "addInputFileName",
+          "value": "false",
+          "widget": "array",
+          "title": "Whether to add Input File Name as a column in the Dataframe",
+          "description": "Add the new field:input_file_name",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "encoding",
+          "value": "UTF-8",
+          "widget": "textfield",
+          "title": "Encoding",
+          "description": "Decodes the CSV files by the given encoding type",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "quote",
+          "value": "\"",
+          "widget": "textfield",
+          "title": "Quote",
+          "description": "Sets a single character used for escaping quoted values where the separator can be part of the value",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "escape",
+          "value": "\\",
+          "widget": "textfield",
+          "title": "Escape",
+          "description": "Sets a single character used for escaping quotes inside an already quoted value.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"STATEFIPS\",\"STATE\",\"zipcode\",\"agi_stub\",\"N1\",\"MARS1\",\"MARS2\",\"MARS4\",\"PREP\",\"N2\",\"NUMDEP\",\"A00100\",\"N02650\",\"A02650\",\"N00200\",\"A00200\",\"N00300\",\"A00300\",\"N00600\",\"A00600\",\"N00650\",\"A00650\",\"N00700\",\"A00700\",\"N00900\",\"A00900\",\"N01000\",\"A01000\",\"N01400\",\"A01400\",\"N01700\",\"A01700\",\"SCHF\",\"N02300\",\"A02300\",\"N02500\",\"A02500\",\"N26270\",\"A26270\",\"N02900\",\"A02900\",\"N03220\",\"A03220\",\"N03300\",\"A03300\",\"N03270\",\"A03270\",\"N03150\",\"A03150\",\"N03210\",\"A03210\",\"N03230\",\"A03230\",\"N03240\",\"A03240\",\"N04470\",\"A04470\",\"A00101\",\"N18425\",\"A18425\",\"N18450\",\"A18450\",\"N18500\",\"A18500\",\"N18300\",\"A18300\",\"N19300\",\"A19300\",\"N19700\",\"A19700\",\"N04800\",\"A04800\",\"N05800\",\"A05800\",\"N09600\",\"A09600\",\"N07100\",\"A07100\",\"N07300\",\"A07300\",\"N07180\",\"A07180\",\"N07230\",\"A07230\",\"N07240\",\"A07240\",\"N07220\",\"A07220\",\"N07260\",\"A07260\",\"N09400\",\"A09400\",\"N10600\",\"A10600\",\"N59660\",\"A59660\",\"N59720\",\"A59720\",\"N11070\",\"A11070\",\"N10960\",\"A10960\",\"N06500\",\"A06500\",\"N10300\",\"A10300\",\"N85330\",\"A85330\",\"N85300\",\"A85300\",\"N11901\",\"A11901\",\"N11902\",\"A11902\"]",
+          "widget": "schema_col_names",
+          "title": "Column Names for the CSV",
+          "description": "New Output Columns of the SQL",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"INTEGER\",\"STRING\",\"INTEGER\",\"INTEGER\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\",\"DOUBLE\"]",
+          "widget": "schema_col_types",
+          "title": "Column Types for the CSV",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Column Formats for the CSV",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "2",
+      "name": "Print N Rows",
+      "description": "Prints the specified number of records in the DataFrame. It is useful for seeing intermediate output",
+      "details": "\u003ch2\u003ePrint N Rows Node Details\u003c/h2\u003e\n\u003cbr\u003e\nThis node is used to print the first N rows from the incoming dataframe.\u003cbr\u003e\n\u003cbr\u003e\nThe Number of rows that needs to be printed can be configured in the node.\u003cbr\u003e\n\u003cbr\u003e\n\u003ch4\u003eInput Parameters\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e OUTPUT STORAGE LEVEL : Keep this as DEFAULT.\u003c/li\u003e\n\u003cli\u003e TITLE : Enter a short description for the type of information being displayed.\u003c/li\u003e\n\u003cli\u003e NUM ROWS TO PRINT : Set an integer value(N) which controls the number of rows to be displayed(Default N\u003d10).\u003c/li\u003e\n\u003cli\u003e DISPLAY DATA TYPE : Shows the output dataframe column datatypes by default.\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch4\u003eOutput\u003c/h4\u003e\n\u003cul\u003e\n\u003cli\u003e This node can be used to view, analyze and validate the output of the Dataframe.\u003c/li\u003e\n\u003c/ul\u003e",
+      "examples": "",
+      "type": "transform",
+      "nodeClass": "fire.nodes.util.NodePrintFirstNRows",
+      "x": "476px",
+      "y": "235px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "title",
+          "value": "Row Values",
+          "widget": "textfield",
+          "title": "Title",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "n",
+          "value": "10",
+          "widget": "textfield",
+          "title": "Num Rows to Print",
+          "description": "number of rows to be printed",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        },
+        {
+          "name": "displayDataType",
+          "value": "true",
+          "widget": "array",
+          "title": "Display Data Type",
+          "description": "If true display rows DataType",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false
+        }
+      ],
+      "engine": "all"
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "target": "2",
+      "id": 1
+    }
+  ],
+  "dataSetDetails": [],
+  "engine": "scala"
+}

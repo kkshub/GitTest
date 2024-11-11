@@ -1,0 +1,20 @@
+{
+  "id": 320,
+  "name": "AppTest",
+  "status": "ACTIVE",
+  "category": "",
+  "description": "",
+  "appStages": [],
+  "executionType": "Workflow",
+  "projectId": 275,
+  "executionId": 3114,
+  "jobName": "",
+  "notebookPath": "",
+  "uuid": "APPTEST",
+  "icon": "{\"type\":\"svg\",\"icon\":\"images/createApplications.svg\"}",
+  "usecase": "",
+  "condition": "",
+  "syncedWithGithub": false,
+  "isGenAiApp": false,
+  "workflowUuid": "fa5a1b90-72d3-4ba3-896a-da47e6a73876"
+}

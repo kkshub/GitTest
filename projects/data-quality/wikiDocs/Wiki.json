@@ -7,9 +7,9 @@
   "content": "<p>This is test wiki</p>",
   "icon": "{\"type\":\"svg\",\"icon\":\"images/createApplications.svg\"}",
   "description": "sfda",
-  "syncedWithGithub": false,
+  "syncedWithGithub": true,
   "createdBy": "admin",
   "dateCreated": "Nov 11, 2024 12:00:02 PM",
   "updatedBy": "admin",
-  "dateLastUpdated": "Nov 11, 2024 12:00:24 PM"
+  "dateLastUpdated": "Nov 11, 2024 12:03:11 PM"
 }

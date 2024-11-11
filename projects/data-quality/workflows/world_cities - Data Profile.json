@@ -101,8 +101,8 @@
       "id": "5",
       "name": "Correlation",
       "description": "calculates the correlation between two series of data.",
-      "details": "<h2>Correlation Node Details</h2>\n<br>\nCorrelation is to measure if two variables or two feature columns tend to move in together in same or opposite direction. The idea is to detect if one variable or feature column can be predicted by another variable or feature column.<br>\n<br>\nThe Correlation node uses the method of Pearson's correlation for checking correlation between two continuous variables (or feature columns)<br>\n<br>\n<h4>Input Parameters</h4>\n<ul>\n<li> OUTPUT STORAGE LEVEL : Keep this as DEFAULT.</li>\n<li> TITLE : A short description to summarizes what the data depicts.</li>\n<li> INPUT COLUMN FOR CORRELATION : </li>\n</ul>\n- Selected : A list of numeric columns among which the correlation is to be predicted.<br>",
-      "examples": "<h2>Correlation Node Example</h2>\n<br>\nFor a given dataframe having the below schema:<br>\nCourse  | Amount | Discount| <br>\n(String)| Double | Double  |<br>\n----------------------------<br>\n<br>\nWe can select the <b>Amount</b> and <b>Discount</b> fields for which we need to find the correlation.<br>\n<br>\nThis will yield three separate output sections:<br>\n- A Correlation Table<br>\n- A Correlation Matrix &<br>\n- A sample data values of the input dataframe<br>",
+      "details": "This node calculates the correlation between two series of data in a common operation in Statistics.<br>\n<br>\nMore at Spark MLlib/ML docs page : <a href=\"http://spark.apache.org/docs/latest/mllib-statistics.html#correlations\" target=\"_blank\">spark.apache.org/docs/latest/mllib-statistics.html#correlations</a><br>",
+      "examples": "",
       "type": "transform",
       "nodeClass": "fire.nodes.ml.NodeCorrelation",
       "x": "469.484px",
@@ -156,8 +156,27 @@
             "integer",
             "long",
             "double",
-            "float",
-            "decimal"
+            "float"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "handleInvalid",
+          "value": "skip",
+          "widget": "array",
+          "title": "Handle invalid pairs",
+          "description": "Handle invalid pairs.",
+          "datatypes": [
+            "string"
+          ],
+          "optionsArray": [
+            "skip",
+            "error",
+            "keep"
           ],
           "required": false,
           "display": true,

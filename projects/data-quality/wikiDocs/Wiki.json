@@ -1,0 +1,15 @@
+{
+  "id": 163,
+  "uuid": "df0933fd-7330-4ea9-b5d8-ba5b35a8845c",
+  "name": "Wiki",
+  "category": "",
+  "projectId": 275,
+  "content": "<p>This is test wiki</p>",
+  "icon": "{\"type\":\"svg\",\"icon\":\"images/createApplications.svg\"}",
+  "description": "sfda",
+  "syncedWithGithub": false,
+  "createdBy": "admin",
+  "dateCreated": "Nov 11, 2024 12:00:02 PM",
+  "updatedBy": "admin",
+  "dateLastUpdated": "Nov 11, 2024 12:00:24 PM"
+}

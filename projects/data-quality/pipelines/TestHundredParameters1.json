@@ -1,0 +1,72 @@
+{
+  "name": "TestHundredParameters1",
+  "uuid": "8509f840-a719-498e-8515-3f0a423cb060",
+  "category": "",
+  "description": "-",
+  "parameters": "--var a1=1 --var a2=2 --var a3=3 --var a4=4 --var a5=5 --var a6=6 --var a7=7 --var a8=8 --var a9=9 --var a10=10 --var a11=11 --var a12=12 --var a13=13 --var a14=14 --var a15=15 --var a16=16 --var a17=17 --var a18=18 --var a19=19 --var a20=20 --var a21=21 --var a22=22 --var a23=23 --var a24=24 --var a25=25 --var a26=26 --var a27=27 --var a28=28 --var a29=29 --var a30=30 --var a31=31 --var a32=32 --var a33=33 --var a34=34 --var a35=35 --var a36=36 --var a37=37 --var a38=38 --var a39=39 --var a40=40 --var a41=41 --var a42=42 --var a43=43 --var a44=44 --var a45=45 --var a46=46 --var a47=47 --var a48=48 --var a49=49 --var a50=50 --var a51=51 --var a52=52 --var a53=53 --var a54=54 --var a55=55 --var a56=56 --var a57=57 --var a58=58 --var a59=59 --var a60=60 --var a62=62 --var a63=63 --var a64=64 --var a65=65 --var a66=66 --var a67=67 --var a68=68 --var a69=69 --var a70=70 --var a71=71 --var a72=72 --var a73=73 --var a74=74 --var a75=75 --var a76=76 --var a77=77 --var a78=78 --var a79=79 --var a80=80 --var a81=81 --var a82=82 --var a83=83 --var a84=84 --var a85=85 --var a86=86 --var a87=87 --var a88=88 --var a89=89 --var a90=90 --var a91=91 --var a92=92 --var a93=93 --var a94=94 --var a95=95 --var a96=96 --var a97=97 --var a98=98 --var a98One=98 --var a99=99 --var a100=100",
+  "nodes": [
+    {
+      "id": "1",
+      "path": "/02-Code/",
+      "name": "Bash Operator",
+      "description": "This node executes a Bash script, command or set of commands.",
+      "details": "<h2>Bash Operator</h2>\n<br>\nThis node executes a Bash script, command or set of commands.<br>",
+      "examples": "<h2> Bash Operator Examples</h2>\n<br>\n<h4> Example of a Simple Bash Command</h4>\n<br>\nCommand: echo 'Hello, World!'<br>\n<br>\nThis command prints \"Hello, World!\" to the console.<br>\n<br>\n<h4> Example of Executing a Script</h4>\n<br>\nCommand: bash my_script.sh<br>\n<br>\nThis command runs a Bash script named my_script.sh. Ensure that the script has execute permissions.<br>\n<br>\n<h4> Example of Setting Environment Variables</h4>\n<br>\nCommand:<br>\nexport MY_VAR='Hello';<br>\necho $MY_VAR<br>\n<br>\nThis command sets an environment variable MY_VAR and then echoes its value.<br>\n<br>\n<h4> Example of Using Conditional Logic</h4>\n<br>\nif [ -f /path/to/file ]; then<br>\necho 'File exists';<br>\nelse<br>\necho 'File does not exist';<br>\nfi<br>\n<br>\nThis command checks if a specific file exists and echoes the appropriate message.<br>\n<br>\n<h4> Usage</h4>\n<br>\n<ul>\n<li> Task ID: \"bash_operator_task\"</li>\n<li> Trigger Rule: all_success</li>\n<li> Shell Command: echo 'Hello, World!'</li>\n</ul>",
+      "type": "bashOperator",
+      "nodeClass": "fire.pipelineNodes.bashOperator",
+      "x": "261px",
+      "y": "206px",
+      "fields": [
+        {
+          "name": "Name",
+          "value": "tstls",
+          "widget": "textfield",
+          "title": "Task Name",
+          "description": "Unique name of the task in Airflow DAG",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "expandable": false,
+          "disableRefresh": false
+        },
+        {
+          "name": "trigger_rule",
+          "value": "all_success",
+          "widget": "array",
+          "title": "Trigger Rule",
+          "description": "Trigger Rule to be used",
+          "optionsArray": [
+            "all_success",
+            "all_failed",
+            "all_done",
+            "all_skipped",
+            "one_failed",
+            "one_success",
+            "none_failed",
+            "none_failed_min_one_success",
+            "none_skipped",
+            "always"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "expandable": false,
+          "disableRefresh": false
+        },
+        {
+          "name": "shellCommand",
+          "value": "ls",
+          "widget": "shellcommand",
+          "title": "Shell Command",
+          "description": "Shell command to be executed",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "expandable": false,
+          "disableRefresh": false
+        }
+      ]
+    }
+  ],
+  "edges": []
+}

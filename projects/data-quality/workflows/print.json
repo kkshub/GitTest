@@ -1,0 +1,579 @@
+{
+  "name": "print",
+  "uuid": "5347f4c6-f2d3-4530-a6b8-8c9b854a3e0d",
+  "category": "-",
+  "parameters": "",
+  "nodes": [
+    {
+      "id": "1",
+      "name": "Read CSV",
+      "iconImage": "/images/icons/node-icon/csv.svg",
+      "description": "It reads in CSV files and creates a DataFrame from it.",
+      "details": "<h2>Read CSV Details</h2>\n<br>\nThis node reads CSV files and creates a DataFrame from them. It can read either a single file or a directory containing multiple files. The user can configure the below fields to parse the file.<br>\n<br>\nThe user can choose the <b>Output storage level</b> from the drop down. The options in the dropdown can be one of the following:<br>\n<ul>\n<li> <b>MEMORY_ONLY</b>          Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, some partitions will not be cached and will be recomputed on the fly each time they are needed. This is the default level.</li>\n<li> <b>MEMORY_AND_DISK</b>       Store RDD as deserialized Java objects in the JVM. If the RDD does not fit in memory, store the partitions that do not fit on disk, and read them from there when they are needed.</li>\n<li> <b>MEMORY_ONLY_SER</b>        Store RDD as serialized Java objects (one byte array per partition). This is generally more space-efficient than deserialized objects, especially when using a fast serializer, but more CPU-intensive to read.</li>\n<li> <b>MEMORY_AND_DISK_SER</b>    Similar to MEMORY_ONLY_SER, but spill partitions that do not fit in memory to disk instead of recomputing them on the fly each time they're needed.</li>\n<li> <b>DISK_ONLY</b>              Store the RDD partitions only on disk.</li>\n<li> <b>MEMORY_ONLY_2, MEMORY_AND_DISK_2 others </b> . Same as the levels above, but replicate each partition on two cluster nodes.</li>\n<li> <b>OFF_HEAP</b>               Similar to MEMORY_ONLY_SER, but store the data in off-heap memory. This requires off-heap memory to be enabled.</li>\n</ul>\nThe user needs to provide a data file <b>Path</b> to read the data from. This is a required field.<br>\n<br>\nThe user can choose the <b>Separator</b> used in the data file to parse it. The default separator is <b>( , )</b> comma.<br>\n<br>\nIn the <b>Header</b> field, one can choose:<br>\n<ul>\n<li> <b>true</b> if the data file has a header.</li>\n<li> <b>false</b> Otherwise.</li>\n</ul>\nIn the <b>Drop special character in column name</b> field, one can choose:<br>\n<ul>\n<li> <b>true</b> If you want to remove the special characters from column names.</li>\n<li> <b>false</b> Otherwise.</li>\n</ul>\nIn the <b>Mode</b> field, one can choose from the below options in the dropdown:<br>\n<ul>\n<li> <b>PERMISSIVE</b> When the parser meets a corrupt field in a record, it sets the value of the field to NULL and continues to the next record.</li>\n<li> <b>DROPMALFORMED</b> ignores the whole corrupted record.</li>\n<li> <b>FAILFAST</b> throws an exception when it meets corrupted records.</li>\n</ul>\nIn the <b>Enforce Schema</b> field, one can choose:<br>\n<ul>\n<li> <b>true</b> The specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored.</li>\n<li> <b>false</b> The schema will be validated against all headers in CSV files when the header option is set to <b>false</b>.</li>\n</ul>\nIn the <b>Whether to add input file as a column in DataFrame</b> field, one can choose:<br>\n<ul>\n<li> <b>true</b> There will be a new column added to the DataFrame at the end, which can be seen in the schema columns. One can enter the name of this column.</li>\n<li> <b>false</b> This functionality is disabled, and the DataFrame consists of only the columns read from the data file.</li>\n</ul>\nIn the <b>ENCODING</b> field, one can specify the encoding type to be used for reading the files. By default, it is set as <b>UTF-8</b>.<br>\n<br>\nThe <b>QUOTE</b> field sets a single character used for escaping quoted values where the separator can be part of the value. The default value for this is <b>( \" )</b>, a double quote.<br>\n<br>\nThe <b>ESCAPE</b> field sets a single character used for escaping quotes inside an already quoted value. The default value for this is <b>( \\ )</b>, a backslash.\t<br>\n<br>\nAfter the above options are set, one can click on <b>Refresh Schema</b> to see the final columns.<br>\nUsers can still add or delete columns using <b>+</b> button next to the refresh schema and <b>-</b> button next to the column names.<br>",
+      "examples": "",
+      "type": "dataset",
+      "nodeClass": "fire.nodes.dataset.NodeDatasetCSV",
+      "x": "181px",
+      "y": "160px",
+      "hint": "Refresh the schema when a new file is selected or the file content has changed",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "path",
+          "value": "C:\\Users\\NMBR\\data\\housing.csv",
+          "widget": "textfield",
+          "title": "Path",
+          "description": "Path of the file/directory",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "separator",
+          "value": ",",
+          "widget": "textfield",
+          "title": "Separator",
+          "description": "CSV Separator",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "header",
+          "value": "true",
+          "widget": "array",
+          "title": "Header",
+          "description": "Whether the file has a header row",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "dropSpecialCharacterInColumnName",
+          "value": "false",
+          "widget": "array",
+          "title": "Drop Special Character In ColumnName",
+          "description": "Whether to drop the Special Characters and Spaces in Column Name.",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "mode",
+          "value": "PERMISSIVE",
+          "widget": "array",
+          "title": "Mode",
+          "description": "Mode for dealing with corrupt records during parsing.",
+          "optionsArray": [
+            "PERMISSIVE",
+            "DROPMALFORMED",
+            "FAILFAST"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "enforceSchema",
+          "value": "false",
+          "widget": "array",
+          "title": "Enforce Schema",
+          "description": "If it is set to true, the specified or inferred schema will be forcibly applied to datasource files, and headers in CSV files will be ignored. If the option is set to false, the schema will be validated against all headers in CSV files in the case when the header option is set to true.",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "addInputFileName",
+          "value": "false",
+          "widget": "array",
+          "title": "Whether to Add Input File Name as Column in the Dataframe",
+          "description": "Add the new field:input_file_name",
+          "optionsArray": [
+            "false",
+            "true"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "encoding",
+          "value": "UTF-8",
+          "widget": "textfield",
+          "title": "Encoding",
+          "description": "Decodes the CSV files by the given encoding type",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "quote",
+          "value": "\"",
+          "widget": "textfield",
+          "title": "Quote",
+          "description": "Sets a single character used for escaping quoted values where the separator can be part of the value",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "escape",
+          "value": "\\",
+          "widget": "textfield",
+          "title": "Escape",
+          "description": "Sets a single character used for escaping quotes inside an already quoted value.",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "outputColNames",
+          "value": "[\"id\",\"price\",\"lotsize\",\"bedrooms\",\"bathrms\",\"stories\",\"driveway\",\"recroom\",\"fullbase\",\"gashw\",\"airco\",\"garagepl\",\"prefarea\"]",
+          "widget": "schema_col_names",
+          "title": "Column Names for the CSV",
+          "description": "New Output Columns of the SQL",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "outputColTypes",
+          "value": "[\"INTEGER\",\"INTEGER\",\"INTEGER\",\"INTEGER\",\"INTEGER\",\"INTEGER\",\"STRING\",\"STRING\",\"STRING\",\"STRING\",\"STRING\",\"INTEGER\",\"STRING\"]",
+          "widget": "schema_col_types",
+          "title": "Column Types for the CSV",
+          "description": "Data Type of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "outputColFormats",
+          "value": "[\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\"]",
+          "widget": "schema_col_formats",
+          "title": "Column Formats for the CSV",
+          "description": "Format of the Output Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "2",
+      "name": "Print N Rows",
+      "iconImage": "fa fa-tumblr-square",
+      "description": "Prints the specified number of records in the DataFrame. It is useful for seeing intermediate output",
+      "details": "<h2>Print N Rows Node Details</h2>\n<br>\nThis node is used to print the first N rows from the incoming dataframe.<br>\n<br>\nThe Number of rows that needs to be printed can be configured in the node.<br>\n<br>\n<h4>Input Parameters</h4>\n<ul>\n<li> OUTPUT STORAGE LEVEL : Keep this as DEFAULT.</li>\n<li> TITLE : Enter a short description for the type of information being displayed.</li>\n<li> NUM ROWS TO PRINT : Set an integer value(N) which controls the number of rows to be displayed(Default N=10).</li>\n<li> DISPLAY DATA TYPE : Shows the output dataframe column datatypes by default.</li>\n</ul>\n<h4>Output</h4>\n<ul>\n<li> This node can be used to view, analyze and validate the output of the Dataframe.</li>\n</ul>",
+      "examples": "",
+      "type": "transform",
+      "nodeClass": "fire.nodes.util.NodePrintFirstNRows",
+      "x": "428px",
+      "y": "223px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "title",
+          "value": "Row Values",
+          "widget": "textfield",
+          "title": "Title",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "n",
+          "value": "10",
+          "widget": "textfield",
+          "title": "Num Rows to Print",
+          "description": "number of rows to be printed",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "displayDataType",
+          "value": "true",
+          "widget": "array",
+          "title": "Display Data Type",
+          "description": "If true display rows DataType",
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        }
+      ],
+      "engine": "all"
+    },
+    {
+      "id": "3",
+      "name": "Graph Values",
+      "iconImage": "fa fa-tumblr-square",
+      "details": "<h2>Graph Values Details</h2>\n<br>\nThis node represents variation between data of various data series in Graphical format.<br>\n<br>\nMultiple numeric columns can be plotted along Y-Coordinate. Only one can be selected along X-Coordinate.<br>\n<br>\nVariation between dataseries is plotted as graph of the selected type such as Line-Chart, Bar-Chart or so on.<br>\n<br>\n<h4>Input</h4>\n<ul>\n<li>   TITLE :- The title of a graph can be set here.</li>\n<li>   X LABEL :- X-axis label can be set here.</li>\n<li>   Y LABEL :- Y-axis label can be set here.</li>\n<li>   MAX VALUES TO DISPLAY :- The total number of the data points can be selected here.</li>\n<li>   CHART TYPE :- The desired chart can be selected from the drop-down list(Line Chart,Side By Side Bar Chart,Pie Chart,Scatter Chart)                                                 </li>\n<li>   CHART COLORS :- The different types of color can be selected for better visualization.</li>\n<li>   IS STREAMING? :- If the graph is stream graph set the option as true else false(by default it is false). </li>\n<li>   X COLUMN :- Select the column for X-axis.</li>\n<li>   Y COLUMNS :- Select the colum for Y-axis.</li>\n</ul>\n<h4>Output</h4>\n<ul>\n<li>   It will plot a graph and will represent the trends between mentioned columns.</li>\n<li>   The different types of a graph can be plotted between specified columns to check the trends.</li>\n</ul>\n<h4>Types Of Chart</h4>\n<ul>\n<li>   Line Chart</li>\n<li>   Side By Side Bar Chart</li>\n<li>   Stack Bar Chart</li>\n<li>   Pie Chart</li>\n<li>   Scatter Chart</li>\n<li>   Dual Line Chart</li>\n<li>   Area Chart</li>\n</ul>\n<h4>Example</h4>\n<ul>\n<li>   A line chart allows us to track the development of several variables at the same time.</li>\n<li>   Scatter plots are used to determine whether or not two variables have a relationship or correlation.</li>\n<li>   The main motive of a stacked bar chart is to compare numeric values between levels of a categorical variable.</li>\n</ul>",
+      "examples": "",
+      "type": "transform",
+      "nodeClass": "fire.nodes.graph.NodeGraphValues",
+      "x": "389px",
+      "y": "88px",
+      "fields": [
+        {
+          "name": "storageLevel",
+          "value": "DEFAULT",
+          "widget": "array",
+          "title": "Output Storage Level",
+          "description": "Storage Level of the Output Datasets of this Node",
+          "optionsArray": [
+            "DEFAULT",
+            "NONE",
+            "DISK_ONLY",
+            "DISK_ONLY_2",
+            "MEMORY_ONLY",
+            "MEMORY_ONLY_2",
+            "MEMORY_ONLY_SER",
+            "MEMORY_ONLY_SER_2",
+            "MEMORY_AND_DISK",
+            "MEMORY_AND_DISK_2",
+            "MEMORY_AND_DISK_SER",
+            "MEMORY_AND_DISK_SER_2",
+            "OFF_HEAP"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "title",
+          "value": "Graph Values",
+          "widget": "textfield",
+          "title": "Title",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "titleColor",
+          "value": "#77C27F",
+          "widget": "textcolors",
+          "title": "Title Color",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "description",
+          "value": "",
+          "widget": "textareafield",
+          "title": "Description",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "descriptionColor",
+          "value": "#808080",
+          "widget": "textcolors",
+          "title": "Description Color",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "xlabel",
+          "value": "",
+          "widget": "textfield",
+          "title": "X Label",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "ylabel",
+          "value": "",
+          "widget": "textfield",
+          "title": "Y Label",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "maxValuesToDisplay",
+          "value": "20",
+          "widget": "textfield",
+          "title": "Max Values To Display",
+          "description": "Maximum number of values to display in result.",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "graphType",
+          "value": "COLUMNCHART",
+          "widget": "enum",
+          "title": "Chart Type",
+          "optionsMap": {
+            "LINECHART": "Line Chart",
+            "COLUMNCHART": "Column Chart",
+            "BARCHART": "Bar Chart",
+            "PIE": "Pie Chart",
+            "DONUT ": "Donut Chart",
+            "SCATTERCHART": "Scatter Chart",
+            "DUALLINECHART": "Dual Line Chart",
+            "AREACHART": "Area Chart"
+          },
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "chartColors",
+          "value": "",
+          "widget": "colors",
+          "title": "Chart Colors",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "isStreaming",
+          "value": "false",
+          "widget": "array",
+          "title": "Is Streaming?",
+          "description": "Whether the Graph is a Streaming Graph or not",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "markerSize",
+          "value": "12",
+          "widget": "textfield",
+          "title": "Marker size",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "xCol",
+          "value": "",
+          "widget": "variable",
+          "title": "X Column",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "xSortCol",
+          "value": "true",
+          "widget": "array",
+          "title": "Sort on X Column?",
+          "description": "Whether to Sort on X column or not",
+          "datatypes": [
+            "boolean"
+          ],
+          "optionsArray": [
+            "true",
+            "false"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "yCols",
+          "value": "[]",
+          "widget": "variables",
+          "title": "Y Columns",
+          "datatypes": [
+            "integer",
+            "long",
+            "double",
+            "float"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "ySortCol",
+          "value": "",
+          "widget": "variable",
+          "title": "Y Sort Column",
+          "datatypes": [
+            "integer",
+            "long",
+            "double",
+            "float"
+          ],
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        },
+        {
+          "name": "reNameYColumns",
+          "value": "[]",
+          "widget": "variables_selected",
+          "title": "Rename Y Columns",
+          "required": false,
+          "display": true,
+          "editable": true,
+          "disableRefresh": false,
+          "expandable": false
+        }
+      ],
+      "engine": "all"
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "target": "2",
+      "id": 1
+    },
+    {
+      "source": "1",
+      "target": "3",
+      "id": 2
+    }
+  ],
+  "dataSetDetails": [],
+  "engine": "scala"
+}

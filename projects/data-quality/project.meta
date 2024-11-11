@@ -1,0 +1,18 @@
+{
+  "id": 275,
+  "userId": 1,
+  "uuid": "DATA-QUALITY",
+  "name": "data-quality",
+  "description": "",
+  "usersApplication": 0,
+  "gitBranch": "dev",
+  "gitRootFolder": "/projects",
+  "icon": "{\"type\":\"svg\",\"icon\":\"images/createApplications.svg\"}",
+  "tag": "DATA-QUALITY_275",
+  "gitRepoUrl": "https://github.com/kkshub/GitTest.git",
+  "credentialStores": [],
+  "createdBy": "admin",
+  "dateCreated": "Nov 4, 2024 3:54:02 PM",
+  "updatedBy": "admin",
+  "dateLastUpdated": "Nov 6, 2024 11:26:45 AM"
+}

@@ -1,0 +1,47 @@
+{
+  "name": "test",
+  "uuid": "a5fa49d0-0445-4112-bcbc-d3b37409fbf3",
+  "icon": {
+    "type": "font",
+    "icon": "fa fa-tachometer"
+  },
+  "sheets": [
+    {
+      "id": 1,
+      "name": "Sheet 1",
+      "type": "type",
+      "idx": "1",
+      "items": [
+        {
+          "id": 5,
+          "name": "Correlation",
+          "description": "calculates the correlation between two series of data.",
+          "type": "transform",
+          "x": "469.484px",
+          "y": "230.719px",
+          "workflowId": "53e5f40f-3da3-4593-b67e-a9332517fbb2",
+          "workflowName": "world_cities - Data Profile",
+          "nodeId": "5",
+          "grow": 0
+        }
+      ],
+      "rows": []
+    },
+    {
+      "id": 2,
+      "name": "Sheet 2",
+      "type": "type",
+      "idx": "2",
+      "items": [],
+      "rows": []
+    },
+    {
+      "id": 3,
+      "name": "Sheet 3",
+      "type": "type",
+      "idx": "3",
+      "items": [],
+      "rows": []
+    }
+  ]
+}

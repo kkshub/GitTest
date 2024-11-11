@@ -1,0 +1,72 @@
+{
+  "name": "trigger",
+  "uuid": "5592fcdf-9183-4ae0-a569-74d4a7c04d75",
+  "category": "",
+  "description": "",
+  "parameters": "",
+  "nodes": [
+    {
+      "id": "2",
+      "path": "/02-Code/",
+      "name": "Bash Operator",
+      "description": "This node executes a Bash script, command or set of commands.",
+      "details": "<h2>Bash Operator</h2>\n<br>\nThis node executes a Bash script, command or set of commands.<br>",
+      "examples": "<h2> Bash Operator Examples</h2>\n<br>\n<h4> Example of a Simple Bash Command</h4>\n<br>\nCommand: echo 'Hello, World!'<br>\n<br>\nThis command prints \"Hello, World!\" to the console.<br>\n<br>\n<h4> Example of Executing a Script</h4>\n<br>\nCommand: bash my_script.sh<br>\n<br>\nThis command runs a Bash script named my_script.sh. Ensure that the script has execute permissions.<br>\n<br>\n<h4> Example of Setting Environment Variables</h4>\n<br>\nCommand:<br>\nexport MY_VAR='Hello';<br>\necho $MY_VAR<br>\n<br>\nThis command sets an environment variable MY_VAR and then echoes its value.<br>\n<br>\n<h4> Example of Using Conditional Logic</h4>\n<br>\nif [ -f /path/to/file ]; then<br>\necho 'File exists';<br>\nelse<br>\necho 'File does not exist';<br>\nfi<br>\n<br>\nThis command checks if a specific file exists and echoes the appropriate message.<br>\n<br>\n<h4> Usage</h4>\n<br>\n<ul>\n<li> Task ID: \"bash_operator_task\"</li>\n<li> Trigger Rule: all_success</li>\n<li> Shell Command: echo 'Hello, World!'</li>\n</ul>",
+      "type": "bashOperator",
+      "nodeClass": "fire.pipelineNodes.bashOperator",
+      "x": "110px",
+      "y": "128px",
+      "fields": [
+        {
+          "name": "Name",
+          "value": "asd",
+          "widget": "textfield",
+          "title": "Task Name",
+          "description": "Unique name of the task in Airflow DAG",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "expandable": false,
+          "disableRefresh": false
+        },
+        {
+          "name": "trigger_rule",
+          "value": "all_success",
+          "widget": "array",
+          "title": "Trigger Rule",
+          "description": "Trigger Rule to be used",
+          "optionsArray": [
+            "all_success",
+            "all_failed",
+            "all_done",
+            "all_skipped",
+            "one_failed",
+            "one_success",
+            "none_failed",
+            "none_failed_min_one_success",
+            "none_skipped",
+            "always"
+          ],
+          "required": true,
+          "display": true,
+          "editable": true,
+          "expandable": false,
+          "disableRefresh": false
+        },
+        {
+          "name": "shellCommand",
+          "value": "asd",
+          "widget": "shellcommand",
+          "title": "Shell Command",
+          "description": "Shell command to be executed",
+          "required": true,
+          "display": true,
+          "editable": true,
+          "expandable": false,
+          "disableRefresh": false
+        }
+      ]
+    }
+  ],
+  "edges": []
+}
